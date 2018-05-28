@@ -63,8 +63,8 @@ OBJ_ALL = $(OBJ_M_C) $(OBJ_M_S) $(OBJ_M_U)
 all: $(NAME)
 
 $(NAME): lib $(OBJ_M_C) $(OBJ_M_S) $(OBJ_M_U)
-	$(CC) $(OBJ_M_C) $(OBJ_M_U) $(LIBFT) -I $(INC) -I $(INC_LIB) -o $(NAME_SERVER)
-	$(CC) $(OBJ_M_S) $(OBJ_M_U) $(LIBFT) -I $(INC) -I $(INC_LIB) -o $(NAME_CLIENT)
+	$(CC) $(OBJ_M_C) $(OBJ_M_U) $(LIBFT) -I $(INC) -I $(INC_LIB) -o $(NAME_CLIENT)
+	$(CC) $(OBJ_M_S) $(OBJ_M_U) $(LIBFT) -I $(INC) -I $(INC_LIB) -o $(NAME_SERVER)
 
 $(OBJ_M_C): $(OBJ_PATH)%.o : $(SRC_PATH)/$(SRC_M_CLIENT_PATH)%.c $(INCLUDES)
 	@$(CC) $(CFLAGS) -I$(INC) -I $(INC_LIB) -c $< -o $@

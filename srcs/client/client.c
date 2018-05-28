@@ -21,6 +21,9 @@
 #include <arpa/inet.h>
 #include <netinet/in.h> // /usr/include/netinet/in.h
 
+#include "mtf_input.h"
+#include "ft_string.h"
+
 void usage(char *str)
 {
 	printf("Usage: %s <addr> <port>\n", str);
@@ -47,6 +50,7 @@ int						create_client(char *addr, int port)
 
 int						main(int ac, char **av)
 {
+	char *input;
 	int					port;
 	int					sock;
 	//int					cs; // socket client
@@ -61,7 +65,12 @@ int						main(int ac, char **av)
 	port = atoi(av[2]);
 	sock = create_client(av[1], port); //creation
 
-	write(sock, "Ma bite\n", 8);
+	//write(sock, "Ma bite\n", 8);
+	while (1)
+	{
+		input = main_input();
+		send(sock, input, ft_strlen(input), 0);
+	}
 
 	close(sock); //destruction
 	return (1);

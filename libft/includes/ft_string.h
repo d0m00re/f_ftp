@@ -39,4 +39,6 @@ int			ft_isseparator(int c);
 
 void		ft_bzero(void *v, size_t n);
 
+void		*ft_memset(void *b, int c, size_t len);
+
 #endif
