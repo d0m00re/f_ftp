@@ -21,7 +21,7 @@ int ft_file_write_begin(char *path, char *data, size_t size)
 		return (-1);
 	if ((fd = open(path, O_CREAT | O_WRONLY, 0777)) == -1)
 		return (-2);
-	if ((ret = write(fd, (void *)data, strlen(data))) == -1)
+	if ((ret = write(fd, (void *)data, size)) == -1)
 		return (-3);
 	close(fd);
 	return (0);
@@ -30,7 +30,6 @@ int ft_file_write_begin(char *path, char *data, size_t size)
 int ft_file_write_end(char *path, char *data, size_t size)
 {
 	int fd;
-	int ret;
 
 	if (!path || !data)
 		return (-1);

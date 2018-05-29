@@ -24,6 +24,9 @@
 #include "mtf_input.h"
 #include "ft_string.h"
 
+#include "server.h"
+#include "client.h"
+
 void usage(char *str)
 {
 	printf("Usage: %s <addr> <port>\n", str);
@@ -53,11 +56,6 @@ int						main(int ac, char **av)
 	char *input;
 	int					port;
 	int					sock;
-	//int					cs; // socket client
-	//unsigned int		cslen;
-	//struct sockaddr_in 	csin;
-
-	//int r;
 	char buf[1024];
 
 	if (ac != 3)
@@ -70,14 +68,7 @@ int						main(int ac, char **av)
 	while (1)
 	{
 		input = main_input();
-		send(sock, input, ft_strlen(input), 0);
-		//write(sock, input, ft_strlen(input));
-		rett = recv(sock,buf,1024,0);
-		buf[rett] = '\0';
-		printf("---> %s\n", buf);
-		//size_recv = recv(sock, input, ft_strlen(input), 0);
-		//input[size_recv] = 0;
-		//printf("--> %s\n", input);
+		main_client(sock, input, buf);
 	}
 
 	close(sock); //destruction

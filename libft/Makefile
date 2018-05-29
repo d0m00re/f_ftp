@@ -52,8 +52,7 @@ SRC_M_STRING =  ft_strlen.c ft_strcmp.c ft_strdup.c ft_strcpy.c ft_strcat.c repl
 SRC_M_STDLIB = ft_atoi.c
 SRC_M_LINKED_LIST = ft_lstcreate_elem.c ft_lstpush_back.c   ft_lstpush_front.c ft_lstdestroy.c ft_lstdisplay.c
 #SRC_M_GRAPH = ft_make_graph.c ft_destroy_graph.c ft_display_graph.c ft_graph_exist.c
-SRC_M_FILE = ft_file_exist.c       ft_file_return_data.c ft_file_size.c\
-		ft_file_write.c ft_file_read.c
+SRC_M_FILE = ft_file_exist.c       ft_file_return_data.c ft_file_size.c ft_file_write.c ft_file_read.c
 
 SRC_M_TAB2D_INT = make_2dtab_int.c destroy_2dtab_int.c get_value_2dtab_int.c set_value_2dtab_int.c
 
@@ -73,6 +72,8 @@ OBJ_M_LINKED_LIST = $(patsubst %.c, %.o, $(SRC_M_LINKED_LIST))
 OBJ_M_TAB2D_INT = $(patsubst %.c, %.o, $(SRC_M_TAB2D_INT))
 OBJ_M_STRING_RESIZE = $(patsubst %.c, %.o, $(SRC_M_STRING_RESIZE))
 OBJ_M_INPUT = $(patsubst %.c, %.o, $(SRC_M_INPUT))
+
+OBJ_M_FILE = $(patsubst %.c, %.o, $(SRC_M_FILE))
 
 #################################################
 ### FORMAT PATH
@@ -105,7 +106,7 @@ OBJ_TAB2D_INT = $(addprefix ./$(OBJ_PATH)/, $(OBJ_M_TAB2D_INT))
 SRC_INPUT = $(addprefix ./$(SRC_M_INPUT_PATH)/, $(SRC_M_INPUT))
 OBJ_INPUT = $(addprefix ./$(OBJ_PATH)/, $(OBJ_M_INPUT))
 
-OBJS =  $(OBJ_DISPLAY) $(OBJ_STRING) $(OBJ_STDLIB) $(OBJ_LINKED_LIST) $(OBJ_GRAPH) $(OBJ_FILE) $(OBJ_INPUT) $(OBJ_TAB2D_INT) #$(OBJ_STRING_RESIZE)
+OBJS =  $(OBJ_FILE) $(OBJ_DISPLAY) $(OBJ_STRING) $(OBJ_STDLIB) $(OBJ_LINKED_LIST) $(OBJ_GRAPH) $(OBJ_INPUT) $(OBJ_TAB2D_INT) #$(OBJ_STRING_RESIZE)
 
 #################################################
 ### RULES
@@ -130,6 +131,10 @@ $(OBJ_STDLIB): $(OBJ_PATH)%.o : $(SRC_PATH)/$(SRC_M_STDLIB_PATH)%.c
 
 $(OBJ_LINKED_LIST): $(OBJ_PATH)%.o : $(SRC_PATH)/$(SRC_M_LINKED_LIST_PATH)%.c
 	@echo "$(COL_BLUE)[ COMPILE & ASSEMBLE STEPS : LINKED LIST ] \n"
+	@$(CC) $(CFLAGS) -I$(INC_PATH) -I$(INC) -c $< -o $@
+
+$(OBJ_FILE): $(OBJ_PATH)%.o : $(SRC_PATH)/$(SRC_M_FILE_PATH)%.c
+	@echo "$(COL_BLUE)[ COMPILE & ASSEMBLE STEPS : FILE LIST ] \n"
 	@$(CC) $(CFLAGS) -I$(INC_PATH) -I$(INC) -c $< -o $@
 
 #$(OBJ_GRAPH): $(OBJ_PATH)%.o : $(SRC_PATH)/$(SRC_M_GRAPH_PATH)%.c

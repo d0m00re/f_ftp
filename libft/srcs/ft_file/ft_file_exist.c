@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_file.h"
+#include "ft_display.h"
 
 int		ft_file_exist(char *name)
 {

@@ -2,21 +2,6 @@
 #include "ft_display.h"
 #include "server.h"
 
-/*
-int                                             server_bitch(char buffer[1024], int r)
-{
-        char **split_arg;
-        int nb_arg;
-        int ret_type_cmd;
-
-        split_arg = 0;
-        buffer[r] = '\0';
-        split_arg = ft_strsplit_nb_word(buffer, ' ', &nb_arg); //free le split
-        ret_type_cmd = find_builtin(split_arg[0]);
-        return (ret_type_cmd);
-}
-*/
-
 char    *main_server(char *buf, int size)
 {
 	int nb_word;

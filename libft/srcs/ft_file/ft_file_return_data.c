@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_file.h"
+#include <stdlib.h>
 
 /*
 ** a optimiser si on a deja la size on peut utiliser dirrectement la size dans le buffer
@@ -21,18 +22,18 @@ char		*ft_file_return_data_size(char *name, size_t *size)
 {
 	char	*str;
 	char	c;
-	int		count;
+	unsigned int		count;
 	int		fd;
 
 	*size = ft_file_size(name);
 	if (!name || *size <= 0)
 		return (0);
-	str = malloc(sizeof(char) * (*size + 1));
+	str = malloc(sizeof(char) * ((*size) + 1));
 	if (!str)
 		return (0);
 	fd = open(name, O_RDONLY);
 	count = 0;
-	while (read(fd, &c, 1) && count < *size)
+	while (read(fd, &c, 1) && count < (*size))
 	{
 		str[count] = c;
 		count++;
