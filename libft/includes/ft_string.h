@@ -29,6 +29,7 @@ char		*ft_strcpy(char *dst, const char *src);
 char		*ft_strcat(char *s1, const char *s2);
 
 char		**ft_strsplit(char const *s, char c);
+char		**ft_strsplit_nb_word(char const *s, char c, int *size);
 
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);

@@ -57,6 +57,19 @@ int						create_server(int port)
 	return (sock);
 }
 
+int						server_bitch(char buffer[1024], int r)
+{
+	char **split_arg;
+	int nb_arg;
+	int ret_type_cmd;
+
+	split_arg = 0;
+	buffer[r] = '\0';
+	split_arg = ft_strsplit_nb_word(buffer, ' ', &nb_arg); //free le split
+	ret_type_cmd = find_builtin(split_arg[0]);
+	return (ret_type_cmd);
+}
+
 int						main(int ac, char **av)
 {
 	int					port;
@@ -69,9 +82,6 @@ int						main(int ac, char **av)
 	char buf[1024];
 
 	int ret_server = 0;
-	int num_builtins = 0;
-
-	char *ret_main_server;
 
 	if (ac != 2)
 		usage(av[0]);
@@ -80,16 +90,22 @@ int						main(int ac, char **av)
 
 	cs = accept(sock, (struct sockaddr*)&csin, &cslen);
 
-	while (1)
+	while ((r = read(cs, buf, 1023)) > 0)// && ret_server == QUIT)
 	{
-		r = recv(cs, buf, 1023, 0);
-		ret_main_server = main_server(buf, r);
-		send(cs, ret_main_server, ft_strlen(ret_main_server), 0);
-		if (ret_main_server)
-			free(ret_main_server);
+		if (r > 0)
+		{
+			ret_server = server_bitch(buf, r);
+
+			//pour le moment on va etre naif mais faudrait attendre d avoir trouve le caractere de fin
+			//write(cs, "END OF YOUR LIFE\n", 17);
+
+			buf[r] = '\0';
+			//printf("---> %s\n", buf);
+			//printf("receiver %d bytes: [%s]\n", r, buf);
+			find_builtin(buf);
+			//printf("....\n");
+		}
 	}
-
-
 	close(sock); //destruction
 	return (1);
 }

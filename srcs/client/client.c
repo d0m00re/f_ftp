@@ -58,18 +58,26 @@ int						main(int ac, char **av)
 	//struct sockaddr_in 	csin;
 
 	//int r;
-	//char buf[1024];
+	char buf[1024];
 
 	if (ac != 3)
 		usage(av[0]);
 	port = atoi(av[2]);
 	sock = create_client(av[1], port); //creation
-
+	int rett;
+	int size_recv;
 	//write(sock, "Ma bite\n", 8);
 	while (1)
 	{
 		input = main_input();
 		send(sock, input, ft_strlen(input), 0);
+		//write(sock, input, ft_strlen(input));
+		rett = recv(sock,buf,1024,0);
+		buf[rett] = '\0';
+		printf("---> %s\n", buf);
+		//size_recv = recv(sock, input, ft_strlen(input), 0);
+		//input[size_recv] = 0;
+		//printf("--> %s\n", input);
 	}
 
 	close(sock); //destruction

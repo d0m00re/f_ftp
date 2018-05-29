@@ -1,4 +1,4 @@
-CC = gcc -Wall -Werror -Wextra
+CC = gcc #-Wall -Werror -Wextra
 INC=includes
 INC_LIB=libft/includes
 
@@ -36,7 +36,7 @@ COL_WHITE       = \033[1;37m
 ###############################################
 
 SRC_M_CLIENT		= client.c
-SRC_M_SERVER		= server.c
+SRC_M_SERVER		= server.c main_server.c  manage_builtin.c ft_put.c
 SRC_M_UTILITIES         =
 
 

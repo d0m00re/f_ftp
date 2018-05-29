@@ -21,17 +21,16 @@
 #include <arpa/inet.h>
 #include <netinet/in.h> // /usr/include/netinet/in.h
 
-#include "server.h"
+#include "mtf_input.h"
 #include "ft_string.h"
-#include "ft_display.h"
 
 void usage(char *str)
 {
-	printf("Usage: %s <port>\n", str);
+	printf("Usage: %s <addr> <port>\n", str);
 	exit(-1);
 }
 
-int						create_server(int port)
+int						create_client(char *addr, int port)
 {
 	int					sock;
 	struct protoent		*proto; // get numero of protocol
@@ -39,56 +38,43 @@ int						create_server(int port)
 
 	proto = getprotobyname("tcp");
 	printf("proto : %d\n", proto->p_proto);
-	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
-	{
-		printf("Socket error\n");
-		exit(1);
-	}
+	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
 	sin.sin_family = AF_INET;//famille d adresse
 	sin.sin_port = htons(port); // on doit fair en sorte d adapter le type d endianess
 			// pour cela on va utiliser des macro
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);//adresse
-	if ((bind(sock, (const struct sockaddr *)&sin, sizeof(sin)))== -1)
-	{
-		printf("Bind error ...\n");
-		exit(1);
-	}
+	sin.sin_addr.s_addr = inet_addr(addr);//adresse - convertir une chaine de catacrete en addr
+	connect(sock, (const struct sockaddr *)&sin, sizeof(sin));
 	listen(sock, 42); //taille de la queu qui nous permet de recevoir la connexion
 	return (sock);
 }
 
 int						main(int ac, char **av)
 {
+	char *input;
 	int					port;
 	int					sock;
-	int					cs; // socket client
-	unsigned int		cslen;
-	struct sockaddr_in 	csin;
+	//int					cs; // socket client
+	//unsigned int		cslen;
+	//struct sockaddr_in 	csin;
 
-	int r;
+	//int r;
 	char buf[1024];
 
-	int ret_server = 0;
-	int num_builtins = 0;
-
-	char *ret_main_server;
-
-	if (ac != 2)
+	if (ac != 3)
 		usage(av[0]);
-	port = atoi(av[1]);
-	sock = create_server(port); //creation
-
-	cs = accept(sock, (struct sockaddr*)&csin, &cslen);
-
+	port = atoi(av[2]);
+	sock = create_client(av[1], port); //creation
+	int rett;
+	//write(sock, "Ma bite\n", 8);
 	while (1)
 	{
-		r = recv(cs, buf, 1023, 0);
-		ret_main_server = main_server(buf, r);
-		send(cs, ret_main_server, ft_strlen(ret_main_server), 0);
-		if (ret_main_server)
-			free(ret_main_server);
+		input = main_input();
+		//send(sock, input, ft_strlen(input), 0);
+		write(sock, input, ft_strlen(input));
+		//rett = recv(sock,buf,1024,0);
+		//buf[rett] = '\0';
+		//printf("---> %s\n", buf);
 	}
-
 
 	close(sock); //destruction
 	return (1);

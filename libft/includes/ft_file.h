@@ -23,4 +23,18 @@ int		ft_file_size(char *name);
 char	*ft_file_return_data_size(char *name, size_t *size);
 char	*ft_file_return_data(char *name);
 
+/*
+** READ FILE
+*/
+
+char	*ft_read_file_size(char *path, size_t *size);
+char	*ft_read_file(char *path);
+
+/*
+** WRITE FILE
+*/
+
+int ft_file_write_begin(char *path, char *data, size_t size);
+int ft_file_write_end(char *path, char *data, size_t size);
+
 #endif

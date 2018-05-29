@@ -83,3 +83,28 @@ char			**ft_strsplit(char const *s, char c)
 		str[0] = 0;
 	return ((char **)str);
 }
+
+char                    **ft_strsplit_nb_word(char const *s, char c, int *size)
+{
+        char            **str;
+        int                     nb_word;
+        int                     count;
+        int                     cursor;
+
+        count = 0;
+        cursor = 0;
+        nb_word = ft_nb_word(s, c);
+	*size = nb_word;
+        str = malloc(sizeof(char *) * (nb_word + 1));
+        if (!str)
+                return (0);
+        while (count < nb_word)
+        {
+                str[count] = (char *)extract_word_with_sep(s, c, &cursor);
+                count++;
+        }
+        str[count] = 0;
+        if (nb_word == 0)
+                str[0] = 0;
+        return ((char **)str);
+}
