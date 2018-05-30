@@ -5,4 +5,6 @@ int main_client(int sock, char *input, char buffer[1024]);
 
 int manage_put_client(int sock, char **input, char buffer[1024]);
 
+int create_client(char *addr, int port);
+
 #endif

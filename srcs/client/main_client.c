@@ -42,10 +42,12 @@ int main_client(int sock, char *input, char buffer[1024])
 
 	if (num_builtin == PUT)
 	{
+		ft_putstr("PUT.\n");
 		manage_put_client(sock, strsp, buffer);
 	}
 	else if (num_builtin) // dans le cas ou c est une builtin valide, pas encore de check de validite de synthaxe
 	{
+		ft_putstr("NUM BUILTIN\n");
 		send(sock, input, ft_strlen(input), 0);
 		ret = recv(sock, buffer,SIZE_BUF,0);
 	}

@@ -33,7 +33,7 @@ int ft_file_write_end(char *path, char *data, size_t size)
 
 	if (!path || !data)
 		return (-1);
-	if ((fd = open(path, O_APPEND | O_WRONLY, 0777)) == -1)
+	if ((fd = open(path, O_CREAT | O_APPEND | O_WRONLY, 0777)) == -1)
 		return (-2);
 	if ((write(fd, data, size)) == -1)
 		return (-3);

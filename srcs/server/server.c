@@ -25,36 +25,10 @@
 #include "ft_string.h"
 #include "ft_display.h"
 
-void usage(char *str)
+static void usage(char *str)
 {
-	printf("Usage: %s <port>\n", str);
-	exit(-1);
-}
-
-int						create_server(int port)
-{
-	int					sock;
-	struct protoent		*proto; // get numero of protocol
-	struct sockaddr_in	sin;
-
-	proto = getprotobyname("tcp");
-	printf("proto : %d\n", proto->p_proto);
-	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
-	{
-		printf("Socket error\n");
-		exit(1);
-	}
-	sin.sin_family = AF_INET;//famille d adresse
-	sin.sin_port = htons(port); // on doit fair en sorte d adapter le type d endianess
-			// pour cela on va utiliser des macro
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);//adresse
-	if ((bind(sock, (const struct sockaddr *)&sin, sizeof(sin)))== -1)
-	{
-		printf("Bind error ...\n");
-		exit(1);
-	}
-	listen(sock, 42); //taille de la queu qui nous permet de recevoir la connexion
-	return (sock);
+        printf("Usage: %s <port>\n", str);
+        exit(-1);
 }
 
 int						main(int ac, char **av)
@@ -64,29 +38,35 @@ int						main(int ac, char **av)
 	int					cs; // socket client
 	unsigned int		cslen;
 	struct sockaddr_in 	csin;
-
+	t_server_integ		*i;
 	int r;
 	char buf[1024];
-
 	int ret_server = 0;
 	int num_builtins = 0;
 
-	char *ret_main_server;
-
 	if (ac != 2)
 		usage(av[0]);
+	i = server_integ_make("ft_ftp");
+	/*
+	** GESTION DU SERVEUR
+	*/
+        if (check_good_path(i))
+        {
+
+        }
+	/*
+	** CREATION DU REPERTOIRE SI IL N EXISTE PAS
+	*/
+        if (create_reper_server(i))
+        {
+
+        }
 	port = atoi(av[1]);
 	sock = create_server(port); //creation
-
 	cs = accept(sock, (struct sockaddr*)&csin, &cslen);
-
 	while (1)
 	{
-		r = recv(cs, buf, 1023, 0);
-		ret_main_server = main_server(buf, r);
-		send(cs, ret_main_server, ft_strlen(ret_main_server), 0);
-		if (ret_main_server)
-			free(ret_main_server);
+		main_server(cs, buf, r, i);
 	}
 
 

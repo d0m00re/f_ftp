@@ -25,6 +25,11 @@ void	ft_putstr_fd(char const *s, int fd)
 	write(fd, s, size);
 }
 
+void	ft_putstr_limit(char const *s, size_t size)
+{
+	write(1, s, size);
+}
+
 void	ft_putstr(char const *s)
 {
 	ft_putstr_fd(s, 1);

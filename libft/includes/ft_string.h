@@ -42,4 +42,6 @@ void		ft_bzero(void *v, size_t n);
 
 void		*ft_memset(void *b, int c, size_t len);
 
+char *ft_concat_with_sep(char *s1, char *s2, char *sep);
+
 #endif

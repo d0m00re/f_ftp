@@ -27,28 +27,10 @@
 #include "server.h"
 #include "client.h"
 
-void usage(char *str)
+void    usage(char *str)
 {
-	printf("Usage: %s <addr> <port>\n", str);
-	exit(-1);
-}
-
-int						create_client(char *addr, int port)
-{
-	int					sock;
-	struct protoent		*proto; // get numero of protocol
-	struct sockaddr_in	sin;
-
-	proto = getprotobyname("tcp");
-	printf("proto : %d\n", proto->p_proto);
-	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
-	sin.sin_family = AF_INET;//famille d adresse
-	sin.sin_port = htons(port); // on doit fair en sorte d adapter le type d endianess
-			// pour cela on va utiliser des macro
-	sin.sin_addr.s_addr = inet_addr(addr);//adresse - convertir une chaine de catacrete en addr
-	connect(sock, (const struct sockaddr *)&sin, sizeof(sin));
-	listen(sock, 42); //taille de la queu qui nous permet de recevoir la connexion
-	return (sock);
+        printf("Usage: %s <addr> <port>\n", str);
+        exit(-1);
 }
 
 int						main(int ac, char **av)
