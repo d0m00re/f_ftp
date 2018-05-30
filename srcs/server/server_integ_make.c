@@ -27,11 +27,14 @@ t_server_integ *server_integ_make(char *name_server)
 	// initialisasion du path absolute du server
 	in->path_actual = strdup(".");
 
+	in->full_path_actual = generate_path_server(in);
+
 	// mise a zero des element servant a controller le bon etat du serveur
 
 	in->valid_ftp = 0;
 	in->valid_path = 0;
 	in->rep_is_create = 0;
+
 
 	return (in);
 }
