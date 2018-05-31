@@ -36,7 +36,7 @@ COL_WHITE       = \033[1;37m
 ###############################################
 
 SRC_M_CLIENT		= client.c main_client.c manage_put_client.c create_client.c
-SRC_M_SERVER		= server.c main_server.c  manage_builtin.c ft_put.c create_server.c check_good_path.c server_integ_make.c generate_path.c server_make.c
+SRC_M_SERVER		= server.c main_server.c  manage_builtin.c ft_put.c create_server.c check_good_path.c server_integ_make.c generate_path.c server_make.c ft_cd.c ft_mkdir.c
 SRC_M_UTILITIES         =
 
 

@@ -51,6 +51,7 @@ int	main(int ac, char **av)
         server->sock = accept(sock, (struct sockaddr*)&csin, &cslen);	
 	while (1)
 	{
+		ft_bzero(server->buffer, 1024);
 		main_server(server);
 	}	
 }

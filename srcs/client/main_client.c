@@ -27,6 +27,8 @@ int find_builtin(char *str)
                 return (PWD);
         else if (!ft_strcmp(str, "quit"))
                 return (QUIT);
+	else if (!ft_strcmp(str, "mkdir"))
+		return (MKDIR);
         return (ERROR_CMD);
 }
 
@@ -45,6 +47,20 @@ int main_client(int sock, char *input, char buffer[1024])
 		ft_putstr("PUT.\n");
 		manage_put_client(sock, strsp, buffer);
 	}
+	else if (num_builtin == PWD)
+	{
+		ft_putstr("PWD:\n");
+		send(sock, "pwd", 3, 0);
+		ret = recv(sock, buffer, 1024, 0);
+		ft_putstr_limit(buffer, ret);
+	}
+        else if (num_builtin == CD)
+        {
+                ft_putstr("CD:\n");
+                send(sock, input, ft_strlen(input), 0);
+                ret = recv(sock, buffer, 1024, 0);
+                ft_putstr_limit(buffer, ret);
+        }
 	else if (num_builtin) // dans le cas ou c est une builtin valide, pas encore de check de validite de synthaxe
 	{
 		ft_putstr("NUM BUILTIN\n");

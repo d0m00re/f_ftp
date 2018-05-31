@@ -13,39 +13,11 @@
 #ifndef SERVER_H
 # define SERVER_H
 
+# include "string.h"
+
 /*
 ** MANAGE SERVER FUNCTION
 */
-
-typedef struct s_server_integ
-{
-	int depth; // profondeur
-	char *name_server; // nom du serveur ftp
-	char *full_path; // path comple vers le serveur
-	char *full_path_server; // path avec le nom du serveur
-
-	char *path_actual; // path actual dans le serveur
-	char *full_path_actual;
-
-	int valid_ftp;
-	int valid_path;
-	int rep_is_create;
-
-	int sock; // socket vers le client
-
-	// gestiob du buffer
-	char buffer[1024];
-	int size_buf;
-
-	// input cast in double char table
-	char **sp_buffer;
-	int size_sp;
-	size_t len_header; // find size of header
-
-	// Builtin
-	int num_built;
-	int old_num_built;
-} t_server_integ;
 
 typedef struct s_server
 {
@@ -78,9 +50,9 @@ typedef struct s_server
 t_server *server_make(char *server_name);
 
 
-t_server_integ *server_integ_make(char *name_server);
+//t_server_integ *server_integ_make(char *name_server);
 
-void		*check_path_server(t_server_integ *serv, char *path);
+//void		*check_path_server(t_server_integ *serv, char *path);
 
 
 /*
@@ -88,22 +60,24 @@ void		*check_path_server(t_server_integ *serv, char *path);
 */
 
 //checker le path
-int check_good_path(t_server_integ *i);
+//int check_good_path(t_server_integ *i);
 
 // check generate path
-char *generate_path_server_with_name(t_server_integ *serv, char *name);
-char *generate_path_server(t_server_integ *serv);
+//char *generate_path_server_with_name(t_server_integ *serv, char *name);
+//char *generate_path_server(t_server_integ *serv);
 
 // creer le repertoire d un server
-int create_reper_server(t_server_integ *i);
+//int create_reper_server(t_server_integ *i);
 
 
-enum	e_type_builtin {ERROR_CMD, LS, CD, GET, PUT, PWD, QUIT};
+enum	e_type_builtin {ERROR_CMD, LS, CD, GET, PUT, PWD, QUIT, MKDIR};
 
 int		find_builtin(char *str);
 
 //int		ft_put(char *name, char *data, unsigned int size, t_server_integ *serv);
-int		ft_put(t_server *name);
+int		ft_put(t_server *server);
+int		ft_cd(t_server *server);
+int		ft_mkdir(t_server *server);
 
 char		*main_server(t_server *server);
 

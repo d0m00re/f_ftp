@@ -16,5 +16,7 @@ int find_builtin(char *str)
 		return (PWD);
 	else if (!ft_strcmp(str, "quit"))
 		return (QUIT);
+	else if (!ft_strcmp(str, "mkdir"))
+		return (MKDIR);
 	return (ERROR_CMD);
 }

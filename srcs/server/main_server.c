@@ -21,51 +21,47 @@ char *main_server(t_server *server)
 			ft_put(server);
 			send(server->sock, "200", 3, 0);
 		}
+		else if (server->num_built == GET)
+		{
+			ft_putstr("get\n");
+		}
+		else if (server->num_built == PWD)
+		{
+			ft_putstr("pwd\n");
+			send(server->sock, server->full, ft_strlen(server->full), 0);
+		}
+		else if (server->num_built == CD)
+		{
+			ft_putstr("cd\n");
+			if (server->size_sp == 2)
+			{
+				ft_putstr("cd go go go .\n");
+				ft_cd(server);
+			}
+			ft_cd(server);
+			send(server->sock, "200", 3, 0);
+		}
+		else if (server->num_built == LS)
+		{
+			ft_putstr("ls\n");
+		}
+		else if (server->num_built == QUIT)
+		{
+			ft_putstr("quit\n");
+		}
+		else if (server->num_built == MKDIR)
+		{
+			ft_mkdir(server);
+			send(server->sock, "200", 3, 0);
+		}
 		else
 			send(server->sock, "500", 3, 0);
 	}
 	else
 	{
 		ft_putstr("We have wrong builtin.\n");
+		printf("--> %s|%s\n", server->buffer, server->sp_buffer[0]);
 		send(server->sock, "500", 3, 0);
 	}
 	return (0);
 }
-
-/*
-char	*main_server2(int sock, char *buf, int size, t_server_integ *serv)
-{
-	int nb_word;
-        char *str;
-        char **strsp;
-        int num_builtins;
-	int ret;
-	size_t len_header;
-
-	// 1 recevoir le message
-	// verif retour code
-	ret = recv(sock, buf, SIZE_BUF, 0);
-	strsp = ft_strsplit_nb_word(buf, ' ', &nb_word);
-	num_builtins = find_builtin(strsp[0]);
-	if (num_builtins)
-	{
-		ft_putstr_limit(buf, 100);
-		ft_putstr("Good we have a builtin :)\n");
-		if (num_builtins == PUT)// && nb_word >= 3)
-		{
-			len_header = ft_strlen(strsp[0]) + ft_strlen(strsp[1]) + 2; // get size header
-			ft_put(strsp[1], &(buf[len_header]), ret - len_header, serv);
-			send(sock, "200", 3, 0);
-		}
-		else
-			send(sock, "500", 3, 0);
-	}
-        else
-	{
-                ft_putstr("Builtins not reconize :\n");
-		ft_putstr_limit(buf, 20);
-		send(sock, "500", 3, 0);
-	}
-        return (0);
-}
-*/
