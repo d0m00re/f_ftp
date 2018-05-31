@@ -31,39 +31,32 @@ static void usage(char *str)
         exit(-1);
 }
 
-int						main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	int					port;
-	int					sock;
-	int					cs; // socket client
+	t_server *server;
+	int port;
+	int sock;
 	unsigned int		cslen;
 	struct sockaddr_in 	csin;
-	t_server_integ		*i;
-	int r;
-	char buf[1024];
-	int ret_server = 0;
-	int num_builtins = 0;
 
 	if (ac != 2)
 		usage(av[0]);
-	i = server_integ_make("ft_ftp");
-	/*
-	** GESTION DU SERVEUR
-	*/
-        if (check_good_path(i))
-        {
-
-        }
-	/*
-	** CREATION DU REPERTOIRE SI IL N EXISTE PAS
-	*/
-        if (create_reper_server(i))
-        {
-
-        }
-	port = atoi(av[1]);
-	sock = create_server(port); //creation
-	cs = accept(sock, (struct sockaddr*)&csin, &cslen);
+	if (!(server = server_make("beatiful_server")))
+	{
+		ft_putstr("Error creation server.\n");
+		return (1);
+	}
+        port = atoi(av[1]);
+        sock = create_server(port); //creation
+        server->sock = accept(sock, (struct sockaddr*)&csin, &cslen);	
+	while (1)
+	{
+		main_server(server);
+	}	
+}
+/*
+int						main2(int ac, char **av)
+{
 	while (1)
 	{
 		main_server(cs, buf, r, i);
@@ -73,3 +66,4 @@ int						main(int ac, char **av)
 	close(sock); //destruction
 	return (1);
 }
+*/

@@ -38,13 +38,3 @@ t_server_integ *server_integ_make(char *name_server)
 
 	return (in);
 }
-/*
-int main()
-{
-	t_server_integ *i = 0;
-
-	i = server_integ_make("MA_BITE"); // repertoire projet | 
-	printf("-> %s\n", i->full_path_server);
-	return (1);
-}
-*/

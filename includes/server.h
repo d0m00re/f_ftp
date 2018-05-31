@@ -32,7 +32,51 @@ typedef struct s_server_integ
 	int rep_is_create;
 
 	int sock; // socket vers le client
+
+	// gestiob du buffer
+	char buffer[1024];
+	int size_buf;
+
+	// input cast in double char table
+	char **sp_buffer;
+	int size_sp;
+	size_t len_header; // find size of header
+
+	// Builtin
+	int num_built;
+	int old_num_built;
 } t_server_integ;
+
+typedef struct s_server
+{
+	int deph;
+	char *name; // nom du serveur
+	char *server; //emplacement serveur
+	char *actual; // emplacement relatif dans le server
+	char *full; // path full with getcwd
+
+	int valid_ftp;
+	int valid_path;
+	int rep_is_create;
+
+        int sock; // socket vers le client
+
+        // gestiob du buffer
+        char buffer[1024];
+        int size_buf;
+
+        // input cast in double char table
+        char **sp_buffer;
+        int size_sp;
+        size_t len_header; // find size of header
+
+        // Builtin
+        int num_built;
+        int num_built_old;
+} t_server;
+
+t_server *server_make(char *server_name);
+
 
 t_server_integ *server_integ_make(char *name_server);
 
@@ -58,9 +102,10 @@ enum	e_type_builtin {ERROR_CMD, LS, CD, GET, PUT, PWD, QUIT};
 
 int		find_builtin(char *str);
 
-int		ft_put(char *name, char *data, unsigned int size, t_server_integ *serv);
+//int		ft_put(char *name, char *data, unsigned int size, t_server_integ *serv);
+int		ft_put(t_server *name);
 
-char		*main_server(int sock, char *buf, int size, t_server_integ *serv);
+char		*main_server(t_server *server);
 
 int		create_server(int port);
 
