@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mtf_input.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/01 02:03:31 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/01 02:03:49 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "ft_string.h"
 #include "ft_display.h"
-# define MAX_SIZE 1000
+#define MAX_SIZE 1000
 
 int			ft_clear_buffer(void)
 {
@@ -39,9 +51,9 @@ char		*ft_read_standart_input(void)
 	return (tab);
 }
 
-char	*main_input(void)
+char		*main_input(void)
 {
-	char *line;
+	char	*line;
 
 	line = 0;
 	write(1, "$>", 2);

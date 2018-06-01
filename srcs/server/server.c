@@ -38,6 +38,7 @@ int	main(int ac, char **av)
 	int sock;
 	unsigned int		cslen;
 	struct sockaddr_in 	csin;
+	pid_t pid;
 
 	if (ac != 2)
 		usage(av[0]);
@@ -48,23 +49,11 @@ int	main(int ac, char **av)
 	}
         port = atoi(av[1]);
         sock = create_server(port); //creation
-        server->sock = accept(sock, (struct sockaddr*)&csin, &cslen);	
+	server->sock = accept(sock, (struct sockaddr*)&csin, &cslen);	
 	while (1)
 	{
 		ft_bzero(server->buffer, 1024);
 		main_server(server);
-	}	
-}
-/*
-int						main2(int ac, char **av)
-{
-	while (1)
-	{
-		main_server(cs, buf, r, i);
 	}
-
-
-	close(sock); //destruction
 	return (1);
 }
-*/

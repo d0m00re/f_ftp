@@ -74,10 +74,10 @@ enum	e_type_builtin {ERROR_CMD, LS, CD, GET, PUT, PWD, QUIT, MKDIR};
 
 int		find_builtin(char *str);
 
-//int		ft_put(char *name, char *data, unsigned int size, t_server_integ *serv);
 int		ft_put(t_server *server);
 int		ft_cd(t_server *server);
 int		ft_mkdir(t_server *server);
+int		ft_ls(t_server *server);
 
 char		*main_server(t_server *server);
 

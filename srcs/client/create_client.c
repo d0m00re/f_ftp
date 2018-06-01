@@ -10,18 +10,29 @@
 #include "server.h"
 #include "client.h"
 
+#include "ft_display.h"
+
 int	create_client(char *addr, int port)
 {
+	int ret;
 	int                                     sock;
 	struct protoent         *proto; // get numero of protocol
 	struct sockaddr_in      sin;
 
 	proto = getprotobyname("tcp");
-	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
+	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
+	{
+		ft_putstr("* socket creation error.\n");
+		return (-1);
+	}
 	sin.sin_family = AF_INET;//famille d adresse
 	sin.sin_port = htons(port); // on doit fair en sorte d adapter le type d endianess
 	sin.sin_addr.s_addr = inet_addr(addr);//adresse - convertir une chaine de catacrete en addr
-	connect(sock, (const struct sockaddr *)&sin, sizeof(sin));
-	listen(sock, 42); //taille de la queu qui nous permet de recevoir la connexion
+	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
+	{
+		ft_putstr("* connect error\n");
+		return (-1);
+	}
+	listen(sock, 5);
 	return (sock);
 }

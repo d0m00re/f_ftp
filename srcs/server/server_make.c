@@ -38,13 +38,10 @@ t_server *server_make(char *server_name)
 	//moov in the repertories
 	chdir(server_name);
 
-	//mkdir("ma_bite", 0777);
-	//exit(1);
 	server->full = getcwd(malloc(1024), 1024); // recuperation du path du serveur
 	server->actual = strdup(server->full);
 
 	server->valid_ftp = 1;
 	server->rep_is_create = 1;
-	//printf("Serveur full : %s\n", server->full);
 	return (server);
 }

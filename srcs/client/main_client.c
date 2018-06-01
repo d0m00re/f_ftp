@@ -61,6 +61,13 @@ int main_client(int sock, char *input, char buffer[1024])
                 ret = recv(sock, buffer, 1024, 0);
                 ft_putstr_limit(buffer, ret);
         }
+	else if (num_builtin == LS)
+	{
+		ft_putstr("LS:\n");
+		send(sock, input, ft_strlen(input), 0);
+		ret = recv(sock, buffer, 1024, 0);
+		ft_putstr_limit(buffer, ret);
+	}
 	else if (num_builtin) // dans le cas ou c est une builtin valide, pas encore de check de validite de synthaxe
 	{
 		ft_putstr("NUM BUILTIN\n");

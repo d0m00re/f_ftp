@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 23:03:06 by alhelson          #+#    #+#             */
-/*   Updated: 2018/03/17 23:03:15 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/01 02:02:48 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 #include <stdlib.h>
 
 /*
-** a optimiser si on a deja la size on peut utiliser dirrectement la size dans le buffer
+** a optimiser si on a deja
+** la size on peut utiliser dirrectement la size dans le buffer
 ** on peut egalement utilisr stat pour obtenir la taille sans lire le fichier
 ** de la sorte on augmentera fortement la vitesse du bordel
 */
-char		*ft_file_return_data_size(char *name, size_t *size)
+
+char				*ft_file_return_data_size(char *name, size_t *size)
 {
-	char	*str;
-	char	c;
-	unsigned int		count;
-	int		fd;
+	char			*str;
+	char			c;
+	size_t			count;
+	int				fd;
 
 	*size = ft_file_size(name);
 	if (!name || *size <= 0)
@@ -43,9 +45,9 @@ char		*ft_file_return_data_size(char *name, size_t *size)
 	return (str);
 }
 
-char		*ft_file_return_data(char *name)
+char				*ft_file_return_data(char *name)
 {
-	size_t size;
+	size_t			size;
 
 	return (ft_file_return_data_size(name, &size));
 }

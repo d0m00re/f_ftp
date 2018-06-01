@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include "setting.h"
 #include <stdlib.h>
+#include "ft_string.h"
 
 char *main_server(t_server *server)
 {
@@ -28,7 +29,13 @@ char *main_server(t_server *server)
 		else if (server->num_built == PWD)
 		{
 			ft_putstr("pwd\n");
-			send(server->sock, server->full, ft_strlen(server->full), 0);
+			char *new = extract_string_diff(server->full, server->actual);
+			if (!new)
+				new = ft_strdup("/");
+			printf("--->%s\n", new);
+			//send(server->sock, server->actual, ft_strlen(server->actual), 0); // ici on retourne le repertoire courant du server
+			send(server->sock, new, ft_strlen(new), 0);
+			//free(new);
 		}
 		else if (server->num_built == CD)
 		{
@@ -36,14 +43,17 @@ char *main_server(t_server *server)
 			if (server->size_sp == 2)
 			{
 				ft_putstr("cd go go go .\n");
+				ft_putstr(server->actual);
 				ft_cd(server);
+				ft_putstr("\n");
+				ft_putstr(server->actual);
 			}
 			ft_cd(server);
 			send(server->sock, "200", 3, 0);
 		}
 		else if (server->num_built == LS)
 		{
-			ft_putstr("ls\n");
+			ft_ls(server);
 		}
 		else if (server->num_built == QUIT)
 		{

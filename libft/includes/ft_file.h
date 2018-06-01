@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 15:57:55 by alhelson          #+#    #+#             */
-/*   Updated: 2018/03/18 15:58:06 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/01 02:04:16 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_read_file(char *path);
 ** WRITE FILE
 */
 
-int ft_file_write_begin(char *path, char *data, size_t size);
-int ft_file_write_end(char *path, char *data, size_t size);
+int		ft_file_write_begin(char *path, char *data, size_t size);
+int		ft_file_write_end(char *path, char *data, size_t size);
 
 #endif

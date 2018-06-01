@@ -27,9 +27,13 @@
 #include "server.h"
 #include "client.h"
 
+#include "ft_display.h"
+
 void    usage(char *str)
 {
-        printf("Usage: %s <addr> <port>\n", str);
+	ft_putstr("Usage: ");
+	ft_putstr(str);
+	ft_putstr(" <addr> <port>\n");
         exit(-1);
 }
 
@@ -39,20 +43,23 @@ int						main(int ac, char **av)
 	int					port;
 	int					sock;
 	char buf[1024];
+	int rett;
+	int size_recv;
 
 	if (ac != 3)
 		usage(av[0]);
-	port = atoi(av[2]);
-	sock = create_client(av[1], port); //creation
-	int rett;
-	int size_recv;
-	//write(sock, "Ma bite\n", 8);
+	if ((port = atoi(av[2])) < 1)
+	{
+		ft_putstr("server : wrong port.\n");
+		return (1);
+	}
+	if ((sock = create_client(av[1], port)) == -1) //creation
+		return (1);
 	while (1)
 	{
 		input = main_input();
 		main_client(sock, input, buf);
 	}
-
-	close(sock); //destruction
-	return (1);
+	close(sock);
+	return (0);
 }

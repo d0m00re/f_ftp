@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_server.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/01 05:14:39 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/01 05:15:42 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,17 +22,16 @@
 #include "ft_string.h"
 #include "ft_display.h"
 
-int                                             create_server(int port)
+int						create_server(int port)
 {
-	int			sock;
-        struct protoent		*proto; // get numero of protocol
-        struct sockaddr_in	sin;
+	int					sock;
+	struct protoent		*proto; // get numero of protocol
+	struct sockaddr_in	sin;
 
 	proto = getprotobyname("tcp");
-	printf("proto : %d\n", proto->p_proto);
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
 	{
-		printf("Socket error\n");
+		ft_putstr("Socket error\n");
 		exit(1);
 	}
 	sin.sin_family = AF_INET;//famille d adresse
@@ -29,9 +40,9 @@ int                                             create_server(int port)
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);//adresse
 	if ((bind(sock, (const struct sockaddr *)&sin, sizeof(sin)))== -1)
 	{
-		printf("Bind error ...\n");
+		ft_putstr("Bind error ...\n");
 		exit(1);
-        }
-        listen(sock, 42); //taille de la queu qui nous permet de recevoir la connexion
-        return (sock);
+	}
+	listen(sock, 42); //taille de la queu qui nous permet de recevoir la connexion
+	return (sock);
 }
