@@ -20,6 +20,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <netinet/in.h> // /usr/include/netinet/in.h
+#include <sys/wait.h>
 
 #include "server.h"
 #include "ft_string.h"
@@ -39,21 +40,38 @@ int	main(int ac, char **av)
 	unsigned int		cslen;
 	struct sockaddr_in 	csin;
 	pid_t pid;
+	int res_fils;
 
 	if (ac != 2)
 		usage(av[0]);
+        port = atoi(av[1]);
+        sock = create_server(port);
 	if (!(server = server_make("beatiful_server")))
 	{
 		ft_putstr("Error creation server.\n");
 		return (1);
 	}
-        port = atoi(av[1]);
-        sock = create_server(port); //creation
-	server->sock = accept(sock, (struct sockaddr*)&csin, &cslen);	
 	while (1)
 	{
-		ft_bzero(server->buffer, 1024);
-		main_server(server);
+		server->sock = accept(sock, (struct sockaddr*)&csin, &cslen);
+		if ((pid = fork()) == -1)
+		{
+			close(server->sock);
+			continue;
+		}
+		else if (pid == 0)
+		{
+			while (1)
+			{
+				ft_bzero(server->buffer, 1024);
+				main_server(server);
+			}
+			close(server->sock);
+			break;
+		}
+		else if (pid > 0)
+		{
+			close(server->sock);
+		}
 	}
-	return (1);
 }

@@ -78,6 +78,7 @@ int		ft_put(t_server *server);
 int		ft_cd(t_server *server);
 int		ft_mkdir(t_server *server);
 int		ft_ls(t_server *server);
+int		ft_pwd(t_server *server);
 
 char		*main_server(t_server *server);
 

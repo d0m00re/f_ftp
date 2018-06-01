@@ -28,14 +28,7 @@ char *main_server(t_server *server)
 		}
 		else if (server->num_built == PWD)
 		{
-			ft_putstr("pwd\n");
-			char *new = extract_string_diff(server->full, server->actual);
-			if (!new)
-				new = ft_strdup("/");
-			printf("--->%s\n", new);
-			//send(server->sock, server->actual, ft_strlen(server->actual), 0); // ici on retourne le repertoire courant du server
-			send(server->sock, new, ft_strlen(new), 0);
-			//free(new);
+			ft_pwd(server);
 		}
 		else if (server->num_built == CD)
 		{
