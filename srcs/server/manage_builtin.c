@@ -1,9 +1,12 @@
 #include "server.h"
 #include "ft_string.h"
 #include "ft_display.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 int find_builtin(char *str)
 {
+	printf("->%s|\n", str);
 	if (!ft_strcmp(str, "ls"))
 		return (LS);
 	else if (!ft_strcmp(str, "cd"))

@@ -55,10 +55,11 @@ int						main(int ac, char **av)
 	}
 	if ((sock = create_client(av[1], port)) == -1) //creation
 		return (1);
-	while (1)
+	rett = 0;
+	while (rett != 700)
 	{
 		input = main_input();
-		main_client(sock, input, buf);
+		rett = main_client(sock, input, buf);
 	}
 	close(sock);
 	return (0);

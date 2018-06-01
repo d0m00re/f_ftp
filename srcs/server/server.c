@@ -51,7 +51,7 @@ int	main(int ac, char **av)
 		ft_putstr("Error creation server.\n");
 		return (1);
 	}
-	while (1)
+	while (server->running)
 	{
 		server->sock = accept(sock, (struct sockaddr*)&csin, &cslen);
 		if ((pid = fork()) == -1)
@@ -61,7 +61,7 @@ int	main(int ac, char **av)
 		}
 		else if (pid == 0)
 		{
-			while (1)
+			while (server->running)
 			{
 				ft_bzero(server->buffer, 1024);
 				main_server(server);

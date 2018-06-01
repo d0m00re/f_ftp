@@ -9,6 +9,8 @@
 
 char *main_server(t_server *server)
 {
+	int value_ret;
+
 	server->size_buf = recv(server->sock, server->buffer, SIZE_BUF, 0);
 	server->num_built_old = server->num_built;
 	server->sp_buffer = ft_strsplit_nb_word(server->buffer, ' ', &(server->size_sp));
@@ -23,40 +25,17 @@ char *main_server(t_server *server)
 			send(server->sock, "200", 3, 0);
 		}
 		else if (server->num_built == GET)
-		{
 			ft_putstr("get\n");
-		}
 		else if (server->num_built == PWD)
-		{
 			ft_pwd(server);
-		}
 		else if (server->num_built == CD)
-		{
-			ft_putstr("cd\n");
-			if (server->size_sp == 2)
-			{
-				ft_putstr("cd go go go .\n");
-				ft_putstr(server->actual);
-				ft_cd(server);
-				ft_putstr("\n");
-				ft_putstr(server->actual);
-			}
 			ft_cd(server);
-			send(server->sock, "200", 3, 0);
-		}
 		else if (server->num_built == LS)
-		{
 			ft_ls(server);
-		}
 		else if (server->num_built == QUIT)
-		{
-			ft_putstr("quit\n");
-		}
+			ft_quit(server);
 		else if (server->num_built == MKDIR)
-		{
 			ft_mkdir(server);
-			send(server->sock, "200", 3, 0);
-		}
 		else
 			send(server->sock, "500", 3, 0);
 	}

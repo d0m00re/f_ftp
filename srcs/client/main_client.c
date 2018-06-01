@@ -41,43 +41,46 @@ int main_client(int sock, char *input, char buffer[1024])
 
 	strsp = ft_strsplit_nb_word(input, ' ', &nb_word);
 	num_builtin = find_builtin(strsp[0]);
-	if (num_builtin == PUT)
-	{
-		//ft_putstr("PUT.\n");
+	if (num_builtin == PUT && nb_word == 2)
 		manage_put_client(sock, strsp, buffer);
-	}
-	else if (num_builtin == PWD)
+	//else if (num_builtin == GET && nb_word == 2)
+	//{}
+	else if (num_builtin == PWD && nb_word == 1)
 	{
-		//ft_putstr("PWD:\n");
 		send(sock, "pwd", 3, 0);
 		ret = recv(sock, buffer, 1024, 0);
 		ft_putstr_limit(buffer, ret);
 	}
-        else if (num_builtin == CD)
+        else if (num_builtin == CD && (nb_word == 1 || nb_word == 2))
         {
-                //ft_putstr("CD:\n");
                 send(sock, input, ft_strlen(input), 0);
                 ret = recv(sock, buffer, 1024, 0);
                 ft_putstr_limit(buffer, ret);
         }
-	else if (num_builtin == LS)
+	else if (num_builtin == LS && nb_word == 1)
 	{
 		//ft_putstr("LS:\n");
 		send(sock, input, ft_strlen(input), 0);
 		ret = recv(sock, buffer, 1024, 0);
 		ft_putstr_limit(buffer, ret);
 	}
-	/*else if (num_builtin) // dans le cas ou c est une builtin valide, pas encore de check de validite de synthaxe
+	else if (num_builtin == MKDIR && nb_word == 2)
 	{
-		//ft_putstr("NUM BUILTIN\n");
 		send(sock, input, ft_strlen(input), 0);
-		ret = recv(sock, buffer,SIZE_BUF,0);
-	}*/
-	else
-	{
-		ft_putstr("Wrong builting\n");
-		return (0);
+		ret = recv(sock, buffer, 1024, 0);
+		ft_putstr_limit(buffer, ret);
 	}
+	else if (num_builtin == QUIT && nb_word == 1)
+	{
+		printf("---> %s|%zu", input, ft_strlen(input));
+		send(sock, input, ft_strlen(input), 0);
+		ret = recv(sock, buffer, 1024, 0);
+	}
+	else
+		ft_usage_builtin(num_builtin);
 	ft_putchar('\n');
-	return (1);
+	ft_putstr_limit(buffer, 3);	
+	if (ret == 3 && ft_strcmp(buffer, "700") == 0)
+		return (700);
+	return (num_builtin);
 }

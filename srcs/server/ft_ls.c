@@ -44,16 +44,11 @@ int	ft_ls(t_server *server)
 	int size_header;
 	size_t len;
 
-	ft_putstr("We are in ls\n");
-	//path = path;
 	launch_ls("/tmp/coucou");
-
 	fd = open("/tmp/coucou", O_RDONLY);
 	size_header = 4;
 	ft_strcpy(server->buffer, "201 ");
 	len = read(fd, &(server->buffer[size_header]), 1024 - size_header);
-	ft_putstr_limit(server->buffer, len + size_header);
 	send(server->sock, server->buffer, len + size_header, 0);
-	ft_putstr("End len\n");
 	return (1);
 }

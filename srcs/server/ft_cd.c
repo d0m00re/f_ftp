@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/socket.h>
 
 /*
 ** moove in rep specified
@@ -12,14 +13,17 @@
 
 int ft_cd(t_server *server)
 {
-	printf("--> server->buffer : %s\n", server->buffer);
-	chdir(server->sp_buffer[1]);
-	if(server->actual)
+	if (server->size_sp != 2)
+		ft_strcpy(server->buffer, "510");
+	else if ((chdir(server->sp_buffer[1])) == -1)
+		ft_strcpy(server->buffer, "511");
+	else
 	{
-		free(server->actual);
+		if (server->actual)
+			free(server->actual);
 		server->actual = getcwd(malloc(1024), 1024);
+		ft_strcpy(server->buffer, "200");
 	}
-	//mkdir("cd_works_bitch", 0777);
-	// mise a jours du repertoire
+	send(server->sock, server->buffer, 3, 0);
 	return (0);
 }

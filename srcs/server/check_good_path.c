@@ -1,7 +1,7 @@
 #include "server.h"
 #include <sys/stat.h>
 
-int check_good_path(t_server_integ *in)
+/*int check_good_path(t_server_integ *in)
 {
 	struct stat sb;
 
@@ -28,3 +28,4 @@ int create_reper_server(t_server_integ *in)
 	in->rep_is_create = 1;
 	return (1);
 }
+*/

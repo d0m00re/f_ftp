@@ -43,5 +43,7 @@ t_server *server_make(char *server_name)
 
 	server->valid_ftp = 1;
 	server->rep_is_create = 1;
+
+	server->running = 1;
 	return (server);
 }

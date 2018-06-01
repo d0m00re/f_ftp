@@ -4,6 +4,7 @@
 #include "ft_string.h"
 #include <stdio.h>
 #include <sys/socket.h>
+#include <stdlib.h>
 
 int ft_pwd(t_server *server)
 {
@@ -15,6 +16,7 @@ int ft_pwd(t_server *server)
 	ft_strcpy(server->buffer, "200 ");
 	ft_strcat(server->buffer, new);
 	send(server->sock, server->buffer, ft_strlen(server->buffer), 0);
+	free(new);
 	return (1);
 }
 

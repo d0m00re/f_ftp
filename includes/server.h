@@ -45,6 +45,10 @@ typedef struct s_server
         // Builtin
         int num_built;
         int num_built_old;
+
+	// 1 : client actif
+	// 2 : fin du client
+	int running;
 } t_server;
 
 t_server *server_make(char *server_name);
@@ -79,6 +83,7 @@ int		ft_cd(t_server *server);
 int		ft_mkdir(t_server *server);
 int		ft_ls(t_server *server);
 int		ft_pwd(t_server *server);
+int		ft_quit(t_server *server);
 
 char		*main_server(t_server *server);
 
