@@ -31,7 +31,7 @@ t_client *make_client(void);
 //int main_client(int sock, char *input, char buffer[1024]);
 int main_client(t_client *client);
 
-int manage_put_client(int sock, char **input, char buffer[1024]);
+int manage_put_client(t_client *client);//(int sock, char **input, char buffer[1024]);
 int manage_get_client(t_client *client);
 
 int create_client(char *addr, int port);

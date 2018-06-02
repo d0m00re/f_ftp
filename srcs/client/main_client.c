@@ -43,11 +43,12 @@ int	main_client(t_client *client)
 	num_builtin = find_builtin(client->sp_buffer[0]);
 	if (num_builtin == PUT && client->size_sp == 2)
 	{
-		manage_put_client(client->sock, client->sp_buffer, client->buffer);
+		//manage_put_client(client->sock, client->sp_buffer, client->buffer);
+		manage_put_client(client);
 		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	}
 	else if (num_builtin == GET && client->size_sp == 2)
-		ret = manage_get_client(client);//(client->sock, client->sp_buffer, client->buffer, ft_strlen(client->buffer), client->size_sp);
+		ret = manage_get_client(client);
 	else if (num_builtin == PWD && client->size_sp == 1)
 	{
 		send(client->sock, "pwd", 3, 0);
