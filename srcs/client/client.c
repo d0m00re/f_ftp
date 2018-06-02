@@ -6,12 +6,14 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 00:37:59 by alhelson          #+#    #+#             */
-/*   Updated: 2018/05/28 00:38:37 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/02 06:42:39 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// tcp ip : chacun a une ip et le port pour parler a un service en particulier
-// 12.33.56.7 : 80
+/*
+** tcp ip : chacun a une ip et le port pour parler a un service en particulier
+** 12.33.56.7 : 80
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +38,7 @@ void    usage(char *str)
 	ft_putstr("Usage: ");
 	ft_putstr(str);
 	ft_putstr(" <addr> <port>\n");
-        exit(-1);
+	exit(0);
 }
 
 int						main(int ac, char **av)

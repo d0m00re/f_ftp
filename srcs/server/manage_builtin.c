@@ -6,7 +6,8 @@
 
 int find_builtin(char *str)
 {
-	printf("->%s|\n", str);
+	if (!str)
+		return (ERROR_CMD);
 	if (!ft_strcmp(str, "ls"))
 		return (LS);
 	else if (!ft_strcmp(str, "cd"))

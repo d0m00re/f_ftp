@@ -34,62 +34,50 @@ int find_builtin(char *str)
 
 int main_client(int sock, char *input, char buffer[1024])
 {
-	char **strsp; // split of input
+	char **strsp;
 	int nb_word;
 	int num_builtin;
 	int ret;
 
+	ft_bzero(buffer, 1024);
 	strsp = ft_strsplit_nb_word(input, ' ', &nb_word);
 	num_builtin = find_builtin(strsp[0]);
-	ft_putstr("-|||--------->");
-	ft_putstr_limit(buffer, 1024);
 	if (num_builtin == PUT && nb_word == 2)
 	{
 		manage_put_client(sock, strsp, buffer);
                 ret = recv(sock, buffer, 1024, 0);
-                ft_putstr_limit(buffer, ret);
 	}
 	else if (num_builtin == GET && nb_word == 2)
-	{
 		ret = manage_get_client(sock, strsp, buffer, ft_strlen(buffer), nb_word);
-		//ret = recv(sock, buffer, 1024, 0);
-		//ft_putstr_limit(buffer, ret);
-	}
 	else if (num_builtin == PWD && nb_word == 1)
 	{
 		send(sock, "pwd", 3, 0);
 		ret = recv(sock, buffer, 1024, 0);
-		//ft_putstr_limit(buffer, ret);
 	}
         else if (num_builtin == CD && (nb_word == 1 || nb_word == 2))
         {
                 send(sock, input, ft_strlen(input), 0);
                 ret = recv(sock, buffer, 1024, 0);
-                //ft_putstr_limit(buffer, ret);
         }
 	else if (num_builtin == LS && nb_word == 1)
 	{
-		//ft_putstr("LS:\n");
 		send(sock, input, ft_strlen(input), 0);
 		ret = recv(sock, buffer, 1024, 0);
-		//ft_putstr_limit(buffer, ret);
 	}
 	else if (num_builtin == MKDIR && nb_word == 2)
 	{
 		send(sock, input, ft_strlen(input), 0);
 		ret = recv(sock, buffer, 1024, 0);
-		//ft_putstr_limit(buffer, ret);
 	}
 	else if (num_builtin == QUIT && nb_word == 1)
 	{
-		//printf("---> %s|%zu", input, ft_strlen(input));
 		send(sock, input, ft_strlen(input), 0);
 		ret = recv(sock, buffer, 1024, 0);
 	}
 	else
 		ft_usage_builtin(num_builtin);
 	ft_putchar('\n');
-	//ft_putstr_limit(buffer, 3);	
+	ft_putstr_limit(buffer, 1024);	
 	if (ret == 3 && ft_strcmp(buffer, "700") == 0)
 		return (700);
 	return (num_builtin);

@@ -16,7 +16,7 @@ int	create_client(char *addr, int port)
 {
 	int ret;
 	int                                     sock;
-	struct protoent         *proto; // get numero of protocol
+	struct protoent         *proto;
 	struct sockaddr_in      sin;
 
 	proto = getprotobyname("tcp");
@@ -33,6 +33,6 @@ int	create_client(char *addr, int port)
 		ft_putstr("* connect error\n");
 		return (-1);
 	}
-	listen(sock, 5);
+	listen(sock, 42);
 	return (sock);
 }
