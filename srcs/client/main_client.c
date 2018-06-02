@@ -41,6 +41,8 @@ int main_client(int sock, char *input, char buffer[1024])
 
 	strsp = ft_strsplit_nb_word(input, ' ', &nb_word);
 	num_builtin = find_builtin(strsp[0]);
+	ft_putstr("-|||--------->");
+	ft_putstr_limit(buffer, 1024);
 	if (num_builtin == PUT && nb_word == 2)
 	{
 		manage_put_client(sock, strsp, buffer);
@@ -49,9 +51,9 @@ int main_client(int sock, char *input, char buffer[1024])
 	}
 	else if (num_builtin == GET && nb_word == 2)
 	{
-		manage_get_client(sock, strsp, buffer, ft_strlen(buffer), nb_word);
-		ret = recv(sock, buffer, 1024, 0);
-		ft_putstr_limit(buffer, ret);
+		ret = manage_get_client(sock, strsp, buffer, ft_strlen(buffer), nb_word);
+		//ret = recv(sock, buffer, 1024, 0);
+		//ft_putstr_limit(buffer, ret);
 	}
 	else if (num_builtin == PWD && nb_word == 1)
 	{
@@ -87,7 +89,7 @@ int main_client(int sock, char *input, char buffer[1024])
 	else
 		ft_usage_builtin(num_builtin);
 	ft_putchar('\n');
-	ft_putstr_limit(buffer, 3);	
+	//ft_putstr_limit(buffer, 3);	
 	if (ret == 3 && ft_strcmp(buffer, "700") == 0)
 		return (700);
 	return (num_builtin);

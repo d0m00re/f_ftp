@@ -59,7 +59,7 @@ int						main(int ac, char **av)
 		return (1);
 	rett = 0;
 	// initalisation du signal
-	signal(SIGINT, true_sigint);
+	//signal(SIGINT, true_sigint);
 	while (rett != 700 && !(get_sigint()))
 	{
 		input = main_input();
