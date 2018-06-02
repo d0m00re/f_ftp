@@ -19,11 +19,7 @@ char *main_server(t_server *server)
 	{
 		ft_putstr("We have good bultin.\n");
 		if (server->num_built == PUT)
-		{
-			server->len_header = ft_strlen(server->sp_buffer[0]) + ft_strlen(server->sp_buffer[1]) + 2;
 			ft_put(server);
-			send(server->sock, "200", 3, 0);
-		}
 		else if (server->num_built == GET)
 			ft_putstr("get\n");
 		else if (server->num_built == PWD)

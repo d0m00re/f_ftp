@@ -29,20 +29,20 @@ int manage_put_client(int sock, char **input, char buffer[1024])
 	ft_putstr("Before while .\n");
 	while ((len = read(fd, &(buffer[size_header]), SIZE_BUF - size_header)) > 0)
 	{
-		printf("%zu", len);
-		//send data to server
-		printf("Before sned ... : %lu <= %d\n\n", len + size_header, SIZE_BUF);
+		printf("send : %lu <= %d\n\n", len + size_header, SIZE_BUF);
 		if ((send(sock, buffer, len + size_header, 0)) == -1) // send data to server
 		{
-			ft_putstr("Fucking error ...\n");
+			ft_putstr("put : error send data\n");
 			exit(1);
 		}
-		ft_putstr("After send ...\n");
+		ft_putstr("After transmission :\n");
 		ret = recv(sock, buffer, SIZE_BUF, 0);
-		printf("WTF : %d\n", ret);
 		ft_strcpy(buffer, input[0]); ft_strcat(buffer, " "); ft_strcat(buffer, input[1]);  ft_strcat(buffer, " ");
 	}
-	printf("--> %zu\n", len);
+	// on va envoyer la requete de fin de transmission de fichier
+	ft_putstr("Send empty put - end of file\n");
+	ft_strcpy(buffer, "put");
+	send(sock, buffer, 3, 0);
 	close(fd);
 	return (1);
 }

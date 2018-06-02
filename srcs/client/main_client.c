@@ -42,37 +42,45 @@ int main_client(int sock, char *input, char buffer[1024])
 	strsp = ft_strsplit_nb_word(input, ' ', &nb_word);
 	num_builtin = find_builtin(strsp[0]);
 	if (num_builtin == PUT && nb_word == 2)
+	{
 		manage_put_client(sock, strsp, buffer);
-	//else if (num_builtin == GET && nb_word == 2)
-	//{}
+                ret = recv(sock, buffer, 1024, 0);
+                ft_putstr_limit(buffer, ret);
+	}
+	else if (num_builtin == GET && nb_word == 2)
+	{
+		manage_get_client(sock, strsp, buffer, ft_strlen(buffer), nb_word);
+		ret = recv(sock, buffer, 1024, 0);
+		ft_putstr_limit(buffer, ret);
+	}
 	else if (num_builtin == PWD && nb_word == 1)
 	{
 		send(sock, "pwd", 3, 0);
 		ret = recv(sock, buffer, 1024, 0);
-		ft_putstr_limit(buffer, ret);
+		//ft_putstr_limit(buffer, ret);
 	}
         else if (num_builtin == CD && (nb_word == 1 || nb_word == 2))
         {
                 send(sock, input, ft_strlen(input), 0);
                 ret = recv(sock, buffer, 1024, 0);
-                ft_putstr_limit(buffer, ret);
+                //ft_putstr_limit(buffer, ret);
         }
 	else if (num_builtin == LS && nb_word == 1)
 	{
 		//ft_putstr("LS:\n");
 		send(sock, input, ft_strlen(input), 0);
 		ret = recv(sock, buffer, 1024, 0);
-		ft_putstr_limit(buffer, ret);
+		//ft_putstr_limit(buffer, ret);
 	}
 	else if (num_builtin == MKDIR && nb_word == 2)
 	{
 		send(sock, input, ft_strlen(input), 0);
 		ret = recv(sock, buffer, 1024, 0);
-		ft_putstr_limit(buffer, ret);
+		//ft_putstr_limit(buffer, ret);
 	}
 	else if (num_builtin == QUIT && nb_word == 1)
 	{
-		printf("---> %s|%zu", input, ft_strlen(input));
+		//printf("---> %s|%zu", input, ft_strlen(input));
 		send(sock, input, ft_strlen(input), 0);
 		ret = recv(sock, buffer, 1024, 0);
 	}

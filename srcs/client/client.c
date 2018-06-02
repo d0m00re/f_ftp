@@ -29,6 +29,8 @@
 
 #include "ft_display.h"
 
+#include <signal.h>
+
 void    usage(char *str)
 {
 	ft_putstr("Usage: ");
@@ -56,9 +58,13 @@ int						main(int ac, char **av)
 	if ((sock = create_client(av[1], port)) == -1) //creation
 		return (1);
 	rett = 0;
-	while (rett != 700)
+	// initalisation du signal
+	signal(SIGINT, true_sigint);
+	while (rett != 700 && !(get_sigint()))
 	{
 		input = main_input();
+		if (get_sigint())
+			ft_strcpy(input, "quit");
 		rett = main_client(sock, input, buf);
 	}
 	close(sock);

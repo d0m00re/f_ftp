@@ -35,8 +35,8 @@ COL_WHITE       = \033[1;37m
 ### SOURCES
 ###############################################
 
-SRC_M_CLIENT		= client.c main_client.c manage_put_client.c create_client.c usage_builtin.c
-SRC_M_SERVER		= server.c main_server.c  manage_builtin.c ft_put.c create_server.c check_good_path.c server_make.c ft_cd.c ft_mkdir.c ft_ls.c ft_pwd.c ft_quit.c
+SRC_M_CLIENT		= client.c main_client.c manage_put_client.c manage_get_client.c create_client.c usage_builtin.c sig_int.c
+SRC_M_SERVER		= server.c main_server.c  manage_builtin.c ft_put.c create_server.c check_good_path.c server_make.c ft_cd.c ft_mkdir.c ft_ls.c ft_pwd.c ft_quit.c ft_get.c
 SRC_M_UTILITIES         =
 
 
@@ -76,7 +76,7 @@ $(OBJ_M_U) : $(OBJ_PATH)%.o : $(SRC_PATH)/$(SRC_M_UTILITIES_PATH)%.c $(INCLUDES)
 	@$(CC) $(CFLAGS) -I$(INC) -I $(INC_LIB) -c $< -o $@
 
 lib:
-	@cd $(LIB_PATH)
+	@cd $(LIB_PATH) && make
 
 cleanlib:
 	@cd $(LIB_PATH) && make clean
