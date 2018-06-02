@@ -32,53 +32,52 @@ int find_builtin(char *str)
         return (ERROR_CMD);
 }
 
-int main_client(int sock, char *input, char buffer[1024])
+//int main_client(int sock, char *input, char buffer[SIZE_BUF])
+int	main_client(t_client *client)
 {
-	char **strsp;
-	int nb_word;
 	int num_builtin;
 	int ret;
 
-	ft_bzero(buffer, 1024);
-	strsp = ft_strsplit_nb_word(input, ' ', &nb_word);
-	num_builtin = find_builtin(strsp[0]);
-	if (num_builtin == PUT && nb_word == 2)
+	ft_bzero(client->buffer, SIZE_BUF);
+	client->sp_buffer = ft_strsplit_nb_word(client->input, ' ', &(client->size_sp));
+	num_builtin = find_builtin(client->sp_buffer[0]);
+	if (num_builtin == PUT && client->size_sp == 2)
 	{
-		manage_put_client(sock, strsp, buffer);
-                ret = recv(sock, buffer, 1024, 0);
+		manage_put_client(client->sock, client->sp_buffer, client->buffer);
+		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	}
-	else if (num_builtin == GET && nb_word == 2)
-		ret = manage_get_client(sock, strsp, buffer, ft_strlen(buffer), nb_word);
-	else if (num_builtin == PWD && nb_word == 1)
+	else if (num_builtin == GET && client->size_sp == 2)
+		ret = manage_get_client(client);//(client->sock, client->sp_buffer, client->buffer, ft_strlen(client->buffer), client->size_sp);
+	else if (num_builtin == PWD && client->size_sp == 1)
 	{
-		send(sock, "pwd", 3, 0);
-		ret = recv(sock, buffer, 1024, 0);
+		send(client->sock, "pwd", 3, 0);
+		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	}
-        else if (num_builtin == CD && (nb_word == 1 || nb_word == 2))
+        else if (num_builtin == CD && (client->size_sp == 1 || client->size_sp == 2))
         {
-                send(sock, input, ft_strlen(input), 0);
-                ret = recv(sock, buffer, 1024, 0);
+                send(client->sock, client->input, ft_strlen(client->input), 0);
+                ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
         }
-	else if (num_builtin == LS && nb_word == 1)
+	else if (num_builtin == LS && client->size_sp == 1)
 	{
-		send(sock, input, ft_strlen(input), 0);
-		ret = recv(sock, buffer, 1024, 0);
+		send(client->sock, client->input, ft_strlen(client->input), 0);
+		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	}
-	else if (num_builtin == MKDIR && nb_word == 2)
+	else if (num_builtin == MKDIR && client->size_sp == 2)
 	{
-		send(sock, input, ft_strlen(input), 0);
-		ret = recv(sock, buffer, 1024, 0);
+		send(client->sock, client->input, ft_strlen(client->input), 0);
+		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	}
-	else if (num_builtin == QUIT && nb_word == 1)
+	else if (num_builtin == QUIT && client->size_sp == 1)
 	{
-		send(sock, input, ft_strlen(input), 0);
-		ret = recv(sock, buffer, 1024, 0);
+		send(client->sock, client->input, ft_strlen(client->input), 0);
+		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	}
 	else
 		ft_usage_builtin(num_builtin);
 	ft_putchar('\n');
-	ft_putstr_limit(buffer, 1024);	
-	if (ret == 3 && ft_strcmp(buffer, "700") == 0)
+	ft_putstr_limit(client->buffer, SIZE_BUF);	
+	if (ret == 3 && ft_strcmp(client->buffer, "700") == 0)
 		return (700);
 	return (num_builtin);
 }

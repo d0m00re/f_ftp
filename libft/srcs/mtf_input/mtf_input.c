@@ -58,6 +58,9 @@ char		*main_input(void)
 	line = 0;
 	write(1, "$>", 2);
 	if (!(line = ft_read_standart_input()))
+	{
 		ft_putstr_fd("OMG : error line_command\n", 2);
+		return (0);
+	}
 	return (line);
 }

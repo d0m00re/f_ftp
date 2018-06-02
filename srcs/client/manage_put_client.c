@@ -23,9 +23,13 @@ int manage_put_client(int sock, char **input, char buffer[1024])
 	int size_header;
 	int ret;
 
-	fd = open(input[1], O_RDONLY); // penser a ajouter tout ce qui est gestion de path ...
+	if ((fd = open(input[1], O_RDONLY)) == -1)
+	{
+		ft_putstr("manage_put_client : error open file.\n");
+		exit(1);
+	}
 	size_header = ft_strlen(input[0]) + ft_strlen(input[1]) + 2;
-	ft_strcpy(buffer, input[0]); ft_strcat(buffer, " "); ft_strcat(buffer, input[1]);  ft_strcat(buffer, " "); // put file data
+	concat_2dchar_in_buffer(buffer, input, 2, " ");
 	while ((len = read(fd, &(buffer[size_header]), SIZE_BUF - size_header)) > 0)
 	{
 		if ((send(sock, buffer, len + size_header, 0)) == -1) // send data to server
@@ -33,12 +37,16 @@ int manage_put_client(int sock, char **input, char buffer[1024])
 			ft_putstr("put : error send data\n");
 			exit(1);
 		}
-		ret = recv(sock, buffer, SIZE_BUF, 0);
-		ft_strcpy(buffer, input[0]); ft_strcat(buffer, " "); ft_strcat(buffer, input[1]);  ft_strcat(buffer, " ");
+		if ((ret = recv(sock, buffer, SIZE_BUF, 0)) == -1)
+		{
+			ft_putstr("put ; error recv data\n");
+			exit(1);
+		}
+		concat_2dchar_in_buffer(buffer, input, 2, " ");
 	}
-	// on va envoyer la requete de fin de transmission de fichier
 	ft_strcpy(buffer, "put");
-	send(sock, buffer, 3, 0);
+	if ((send(sock, buffer, 3, 0)) == -1)
+		ft_putstr("put : error send last message\n");
 	close(fd);
 	return (1);
 }

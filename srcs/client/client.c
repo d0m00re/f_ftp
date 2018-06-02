@@ -50,6 +50,8 @@ int						main(int ac, char **av)
 	int rett;
 	int size_recv;
 
+	t_client *client;
+
 	if (ac != 3)
 		usage(av[0]);
 	if ((port = atoi(av[2])) < 1)
@@ -57,18 +59,20 @@ int						main(int ac, char **av)
 		ft_putstr("server : wrong port.\n");
 		return (1);
 	}
-	if ((sock = create_client(av[1], port)) == -1) //creation
+	client = make_client();
+	if ((client->sock = create_client(av[1], port)) == -1) //creation
 		return (1);
 	rett = 0;
-	// initalisation du signal
-	//signal(SIGINT, true_sigint);
-	while (rett != 700 && !(get_sigint()))
+	while (rett != 700)
 	{
-		input = main_input();
-		if (get_sigint())
-			ft_strcpy(input, "quit");
-		rett = main_client(sock, input, buf);
+		if (!(client->input = main_input()))
+			rett = 700;
+		else
+		{
+			client->size_input = ft_strlen(client->input);
+			rett = main_client(client);
+		}
 	}
-	close(sock);
+	close(client->sock);
 	return (0);
 }

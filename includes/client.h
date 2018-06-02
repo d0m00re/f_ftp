@@ -3,10 +3,36 @@
 
 # include <string.h>
 
-int main_client(int sock, char *input, char buffer[1024]);
+typedef struct s_client
+{
+	char *name;
+
+	// manage buffer send/recv
+	char buffer[1024];
+	int size_buf;
+
+	char *input;
+	int size_input;
+
+	//
+	char **sp_buffer;
+	int size_sp;
+
+	size_t len_header;
+
+	int running;
+
+	int sock;
+
+} t_client;
+
+t_client *make_client(void);
+
+//int main_client(int sock, char *input, char buffer[1024]);
+int main_client(t_client *client);
 
 int manage_put_client(int sock, char **input, char buffer[1024]);
-int manage_get_client(int sock, char **input, char buffer[1024], size_t size_buf, int nb_input);
+int manage_get_client(t_client *client);
 
 int create_client(char *addr, int port);
 
