@@ -8,6 +8,5 @@ int ft_cd(t_server *server)
 {
 	printf("--> server->buffer : %s\n", server->buffer);
 	chdir(server->sp_buffer[1]);
-	// mise a jours du repertoire
 	return (0);
 }

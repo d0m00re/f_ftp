@@ -31,29 +31,22 @@
 
 #include "ft_display.h"
 
-#include <signal.h>
-
-void    usage(char *str)
+int    usage(char *str)
 {
 	ft_putstr("Usage: ");
 	ft_putstr(str);
 	ft_putstr(" <addr> <port>\n");
-	exit(0);
+	return (-1);
 }
 
 int						main(int ac, char **av)
 {
-	char *input;
 	int					port;
-	int					sock;
-	char buf[1024];
-	int rett;
-	int size_recv;
-
+	int ret;
 	t_client *client;
 
 	if (ac != 3)
-		usage(av[0]);
+		return (usage(av[0]));
 	if ((port = atoi(av[2])) < 1)
 	{
 		ft_putstr("server : wrong port.\n");
@@ -62,15 +55,15 @@ int						main(int ac, char **av)
 	client = make_client();
 	if ((client->sock = create_client(av[1], port)) == -1) //creation
 		return (1);
-	rett = 0;
-	while (rett != 700)
+	ret = 0;
+	while (ret != 700)
 	{
 		if (!(client->input = main_input()))
-			rett = 700;
+			ret = 700;
 		else
 		{
 			client->size_input = ft_strlen(client->input);
-			rett = main_client(client);
+			ret = main_client(client);
 		}
 	}
 	close(client->sock);

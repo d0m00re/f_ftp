@@ -26,10 +26,12 @@
 #include "ft_string.h"
 #include "ft_display.h"
 
-static void usage(char *str)
+static int usage(char *str)
 {
-        printf("Usage: %s <port>\n", str);
-        exit(-1);
+	ft_putstr("Usage: ");
+	ft_putstr(str);
+	ft_putstr(" <port>\n");
+	return (-1);
 }
 
 int	main(int ac, char **av)
@@ -40,10 +42,9 @@ int	main(int ac, char **av)
 	unsigned int		cslen;
 	struct sockaddr_in 	csin;
 	pid_t pid;
-	int res_fils;
 
 	if (ac != 2)
-		usage(av[0]);
+		return (usage(av[0]));
         port = atoi(av[1]);
         sock = create_server(port);
 	if (!(server = server_make("beatiful_server")))
@@ -70,8 +71,6 @@ int	main(int ac, char **av)
 			break;
 		}
 		else if (pid > 0)
-		{
 			close(server->sock);
-		}
 	}
 }

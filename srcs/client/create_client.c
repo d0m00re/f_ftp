@@ -14,7 +14,6 @@
 
 int	create_client(char *addr, int port)
 {
-	int ret;
 	int                                     sock;
 	struct protoent         *proto;
 	struct sockaddr_in      sin;

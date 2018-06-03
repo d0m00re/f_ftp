@@ -9,15 +9,12 @@
 
 char *main_server(t_server *server)
 {
-	int value_ret;
-
 	if ((server->size_buf = recv(server->sock, server->buffer, SIZE_BUF, 0)) == -1)
 	{
 		ft_putstr("server error : we don t found client ...\n");
 		server->running = 0;
 		return (0);
 	}
-	printf("--> server : %s\n", server->buffer);
 	server->num_built_old = server->num_built;
 	server->sp_buffer = ft_strsplit_nb_word(server->buffer, ' ', &(server->size_sp));
 	server->num_built = find_builtin(server->sp_buffer[0]);
@@ -47,6 +44,5 @@ char *main_server(t_server *server)
 		printf("--> %s|%s\n", server->buffer, server->sp_buffer[0]);
 		send(server->sock, "500", 3, 0);
 	}
-	//exit(1);
 	return (0);
 }

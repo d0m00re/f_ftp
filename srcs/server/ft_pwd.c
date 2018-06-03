@@ -17,6 +17,5 @@ int ft_pwd(t_server *server)
 	ft_strcat(server->buffer, new);
 	send(server->sock, server->buffer, ft_strlen(server->buffer), 0);
 	free(new);
-	return (1);
+	return (0);
 }
-

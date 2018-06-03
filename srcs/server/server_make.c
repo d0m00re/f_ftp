@@ -4,13 +4,16 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include "ft_display.h"
 
 // on va creer le repertoire si il n existe pas
-int ft_create_rep_if_no_exist(t_server *server, char *server_name)
+int ft_create_rep_if_no_exist(char *server_name)
 {
 	struct stat sb;
 
-	printf("Creation server : %s\n", server_name);
+	ft_putstr("*creation server : ");
+	ft_putstr(server_name);
+	ft_putchar('\n');
 	//si le repertoire serveur existe
 	if (stat(server_name, &sb) != -1) // dans le cas ou le repertoire n existe pas
 		return (1);
@@ -33,7 +36,7 @@ t_server *server_make(char *server_name)
 	server->valid_path = 1;
 
 	// creation du repertoire si il n existe pas
-	server->rep_is_create = ft_create_rep_if_no_exist(server, server_name);
+	server->rep_is_create = ft_create_rep_if_no_exist(server_name);
 
 	//moov in the repertories
 	chdir(server_name);

@@ -41,9 +41,9 @@ int	main_client(t_client *client)
 	ft_bzero(client->buffer, SIZE_BUF);
 	client->sp_buffer = ft_strsplit_nb_word(client->input, ' ', &(client->size_sp));
 	num_builtin = find_builtin(client->sp_buffer[0]);
+	ret = 0;
 	if (num_builtin == PUT && client->size_sp == 2)
 	{
-		//manage_put_client(client->sock, client->sp_buffer, client->buffer);
 		manage_put_client(client);
 		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	}

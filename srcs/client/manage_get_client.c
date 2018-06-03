@@ -22,10 +22,7 @@ int manage_get_client(t_client *client)
 		exit(1);
 	c = 0;
         len_header = ft_strlen(client->sp_buffer[0]) + ft_strlen(client->sp_buffer[1]) + 2;
-	ft_strcpy(client->buffer, client->sp_buffer[0]);
-	ft_strcat(client->buffer, " ");
-	ft_strcat(client->buffer, client->sp_buffer[1]);
-	ft_strcat(client->buffer, " ");
+	concat_2dchar_in_buffer(client->buffer, client->sp_buffer, 2, " ");
 	old_string = ft_strdup(client->buffer);
 	send(client->sock, client->buffer, 1024, 0);
 	client->size_buf = recv(client->sock, client->buffer, 1024, 0);
@@ -52,8 +49,6 @@ int manage_get_client(t_client *client)
 		}
 		else
 			c = 1;
-                // on attein ce cas dans le cas lorsque l on arrive dans le cas ou on nous envoi juste le put
-                //case where we end this sheat
         }
         return (1);
 }
