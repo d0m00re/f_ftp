@@ -5,8 +5,10 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <sys/socket.h>
+#include "ft_file.h"
+#include <stdlib.h>
 
-int launch_ls_sys()
+/*int launch_ls_sys()
 {
         char *argv[2];
 
@@ -51,4 +53,27 @@ int	ft_ls(t_server *server)
 	len = read(fd, &(server->buffer[size_header]), 1024 - size_header);
 	send(server->sock, server->buffer, len + size_header, 0);
 	return (1);
+}
+*/
+
+int ft_ls(t_server *server)
+{
+	int len;
+	char *buffer;
+
+	len = 0;
+	if (!(buffer = get_rep_string(".", &len)))
+	{
+		ft_strcpy(server->buffer, "510");
+		len = 3;
+	}
+	else
+	{
+		ft_strcpy(server->buffer, "200 ");
+		ft_strcat(server->buffer, buffer);
+		len += 4;
+		free(buffer);
+	}
+	send(server->sock, server->buffer, len, 0);
+	return (0);
 }
