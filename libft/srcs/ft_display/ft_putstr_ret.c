@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utilities.h                                        :+:      :+:    :+:   */
+/*   ft_putstr_ret.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/03 06:49:08 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/03 06:49:37 by alhelson         ###   ########.fr       */
+/*   Created: 2018/06/03 21:23:03 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/03 21:23:09 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#include "ft_display.h"
 
-# include <unistd.h>
-
-
-#endif
+int ft_putstr_ret(char const *str, int ret)
+{
+	if (!str)
+		return (1);
+	ft_putstr(str);
+	return (ret);
+}

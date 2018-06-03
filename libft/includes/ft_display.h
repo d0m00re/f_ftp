@@ -23,6 +23,8 @@ void	ft_putstr_fd(char const *s, int fd);
 
 void	ft_putstr(char const *s);
 
+int	ft_putstr_ret(char const *s, int ret);
+
 void	ft_putstr_limit(char const *s, size_t size);
 
 void	ft_putstr_fd_endl(char const *s, int fd);

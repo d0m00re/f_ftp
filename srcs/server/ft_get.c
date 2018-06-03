@@ -22,7 +22,11 @@ int	ft_get(t_server *server)
 	}
 	server->len_header = ft_strlen(server->sp_buffer[0]) + ft_strlen(server->sp_buffer[1]) + 2;
 	concat_2dchar_in_buffer(server->buffer, server->sp_buffer, 2, " ");
-	fd = open(server->sp_buffer[1], O_RDONLY);
+	if ((fd = open(server->sp_buffer[1], O_RDONLY)) == -1)
+	{
+		send(server->sock, "714", 3, 0);
+		return (3);
+	}
 	while ((len = read(fd, &(server->buffer[server->len_header]), SIZE_BUF - server->len_header)) > 0)
 	{
 		if ((send(server->sock, server->buffer, len + server->len_header, 0)) == -1) // send data to server

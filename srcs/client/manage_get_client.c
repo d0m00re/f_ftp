@@ -30,12 +30,15 @@ int manage_get_client(t_client *client)
 	old_string = ft_strdup(client->buffer);
 	send(client->sock, client->buffer, 1024, 0);
 	client->size_buf = recv(client->sock, client->buffer, 1024, 0);
+	if (client->size_buf == 3 && ft_strcmp(client->buffer, "714") == 0)
+	{
+		return (0);
+	}
 	ft_file_write_begin(client->sp_buffer[1], &(client->buffer[(size_t)len_header]), (size_t)client->size_buf - len_header);
 	send(client->sock, old_string, ft_strlen(old_string), 0);
 	while (!c)
 	{
-		client->size_buf = recv(client->sock, client->buffer, SIZE_BUF, 0);
-		if (client->size_buf > 3) // when we have data bitch
+		if ((client->size_buf = recv(client->sock, client->buffer, SIZE_BUF, 0)) > 3)
 		{
 			client->sp_buffer = ft_strsplit_nb_word(client->buffer, ' ', &(client->size_sp));
 			if (find_builtin(client->sp_buffer[0]) == GET && client->size_sp >= 2)

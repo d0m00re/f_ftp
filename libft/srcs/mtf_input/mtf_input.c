@@ -64,3 +64,14 @@ char		*main_input(void)
 	}
 	return (line);
 }
+
+/*
+int main()
+{
+	char *str;
+
+	str = main_input();
+	printf("---> %s|%zu\n", str,  ft_strlen(str));
+	return 1;
+}	
+*/

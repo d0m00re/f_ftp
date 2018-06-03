@@ -60,11 +60,16 @@ int						main(int ac, char **av)
 	{
 		if (!(client->input = main_input()))
 			ret = 700;
-		else
+		else if (ft_strlen(client->input) > 0)
 		{
 			client->size_input = ft_strlen(client->input);
 			ret = main_client(client);
 		}
+		else
+		{
+			ft_putstr("\nSon of a bitch. You are very stupid ...\n");
+		}
+		free(client->input);
 	}
 	close(client->sock);
 	return (0);

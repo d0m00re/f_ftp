@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/04 00:07:57 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/04 00:08:05 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_string.h"
 #include "ft_display.h"
 #include "server.h"
@@ -12,7 +24,7 @@
 ** modification of localisation variable
 */
 
-int ft_cd(t_server *server)
+int	ft_cd(t_server *server)
 {
 	if (server->size_sp != 2)
 		ft_strcpy(server->buffer, "510");
@@ -23,11 +35,7 @@ int ft_cd(t_server *server)
 		if (server->actual)
 			free(server->actual);
 		if (!(server->actual = getcwd(malloc(1024), 1024)))
-		{
-			ft_putstr("--> erro getcwd ...\n");
 			ft_strcpy(server->buffer, "500");
-			return (0);
-		}
 		else
 			ft_strcpy(server->buffer, "200");
 	}
