@@ -15,24 +15,23 @@
 
 int find_builtin(char *str)
 {
-        if (!ft_strcmp(str, "ls"))
-                return (LS);
-        else if (!ft_strcmp(str, "cd"))
-                return (CD);
-        else if (!ft_strcmp(str, "get"))
-                return (GET);
-        else if (!(ft_strcmp(str, "put")))
-                return (PUT);
-        else if (!ft_strcmp(str, "pwd"))
-                return (PWD);
-        else if (!ft_strcmp(str, "quit"))
-                return (QUIT);
+	if (!ft_strcmp(str, "ls"))
+		return (LS);
+	else if (!ft_strcmp(str, "cd"))
+		return (CD);
+	else if (!ft_strcmp(str, "get"))
+		return (GET);
+	else if (!(ft_strcmp(str, "put")))
+		return (PUT);
+	else if (!ft_strcmp(str, "pwd"))
+		return (PWD);
+	else if (!ft_strcmp(str, "quit"))
+		return (QUIT);
 	else if (!ft_strcmp(str, "mkdir"))
 		return (MKDIR);
-        return (ERROR_CMD);
+	return (ERROR_CMD);
 }
 
-//int main_client(int sock, char *input, char buffer[SIZE_BUF])
 int	main_client(t_client *client)
 {
 	int num_builtin;
@@ -44,14 +43,12 @@ int	main_client(t_client *client)
 	ret = 0;
 	if (num_builtin == PUT && client->size_sp == 2)
 	{
-		manage_put_client(client);
-		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
+		if ((ret = manage_put_client(client)) == 0)
+			ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
+
 	}
 	else if (num_builtin == GET && client->size_sp == 2)
-	{
 		ret = manage_get_client(client);
-		//ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
-	}
 	else if (num_builtin == PWD && client->size_sp == 1)
 	{
 		send(client->sock, "pwd", 3, 0);

@@ -1,47 +1,64 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/03 06:46:46 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/03 06:47:50 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CLIENT_H
 # define CLIENT_H
 
 # include <string.h>
 
-typedef struct s_client
+/*
+**	char *name;
+**
+**	// manage buffer send/recv
+**	char buffer[1024];
+**        int size_buf;
+**
+**        char *input;
+**        int size_input;
+**
+**        //
+**        char **sp_buffer;
+**        int size_sp;
+**
+**        size_t len_header;
+**
+**        int running;
+**
+**        int sock;
+*/
+
+typedef struct	s_client
 {
-	char *name;
+	char		*name;
+	char		buffer[1024];
+	int			size_buf;
+	char		*input;
+	int			size_input;
+	char		**sp_buffer;
+	int			size_sp;
+	size_t		len_header;
+	int			running;
+	int			sock;
+}				t_client;
 
-	// manage buffer send/recv
-	char buffer[1024];
-	int size_buf;
+t_client		*make_client(void);
 
-	char *input;
-	int size_input;
+int				main_client(t_client *client);
 
-	//
-	char **sp_buffer;
-	int size_sp;
+int				manage_put_client(t_client *client);
+int				manage_get_client(t_client *client);
 
-	size_t len_header;
+int				create_client(char *addr, int port);
 
-	int running;
-
-	int sock;
-
-} t_client;
-
-t_client *make_client(void);
-
-//int main_client(int sock, char *input, char buffer[1024]);
-int main_client(t_client *client);
-
-int manage_put_client(t_client *client);//(int sock, char **input, char buffer[1024]);
-int manage_get_client(t_client *client);
-
-int create_client(char *addr, int port);
-
-// afficher des indications sommaire sur la bonne utilisation des commandes
-void ft_usage_builtin(int num);
-
-
-int	get_sigint();
-void	true_sigint();
-void	false_sigint();
+void			ft_usage_builtin(int num);
 
 #endif

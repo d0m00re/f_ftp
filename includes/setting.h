@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setting.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/03 06:48:04 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/03 06:48:33 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SETTING_H
 # define SETTING_H
 
@@ -16,5 +28,6 @@
 
 # define USAGE_LS "usage : ls"
 # define USAGE_QUIR "usage : quit"
-# define USAGE_BUILTIN "usage : you should use this command : [put|get|pwd|cd|mkdir|ls|quit]"
+# define USAGE_BUILTIN "usage : [put|get|pwd|cd|mkdir|ls|quit]"
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 00:37:59 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/02 06:42:39 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/03 07:01:00 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 #include "ft_display.h"
 
-int    usage(char *str)
+int						usage(char *str)
 {
 	ft_putstr("Usage: ");
 	ft_putstr(str);
@@ -42,8 +42,8 @@ int    usage(char *str)
 int						main(int ac, char **av)
 {
 	int					port;
-	int ret;
-	t_client *client;
+	int					ret;
+	t_client			*client;
 
 	if (ac != 3)
 		return (usage(av[0]));

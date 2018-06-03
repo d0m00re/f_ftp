@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   usage_builtin.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/03 06:52:17 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/03 06:52:27 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_display.h"
 #include "server.h"
 
 #include "setting.h"
 
-void ft_usage_builtin(int num)
+void	ft_usage_builtin(int num)
 {
-
 	if (num == PUT)
 		ft_putstr(USAGE_PUT);
 	else if (num == GET)

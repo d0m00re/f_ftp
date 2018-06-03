@@ -37,7 +37,11 @@ int					get_rep_size_without_hide(char *name)
 	while ((dp = readdir(dirp)) != NULL)
 	{
 		if (dp->d_name[0] != '.')
+		{
 			len += dp->d_namlen + 1;
+			if (dp->d_type == 4)
+				len += 2;
+		}
 	}
 	(void)closedir(dirp);
 	return (len);
@@ -57,6 +61,8 @@ char				*get_rep_string_without_hide_with_size(char *name, int len)
 	{
 		if (dp->d_name[0] != '.')
 		{
+			if (dp->d_type == 4)
+				strcat(str, "./");
 			strcat(str, dp->d_name);
 			strcat(str, " ");
 		}
