@@ -18,7 +18,6 @@ char *main_server(t_server *server)
 	server->num_built_old = server->num_built;
 	server->sp_buffer = ft_strsplit_nb_word(server->buffer, ' ', &(server->size_sp));
 	server->num_built = find_builtin(server->sp_buffer[0]);
-	ft_putstr("Before crahs ????\n");
 	if (server->num_built)
 	{
 		if (server->num_built == PUT)
@@ -26,7 +25,11 @@ char *main_server(t_server *server)
 		else if (server->num_built == GET && server->size_sp == 2)
 			ft_get(server);
 		else if (server->num_built == PWD)
+		{
+			ft_putstr("\t\n-> pwd\n");
 			ft_pwd(server);
+			ft_putstr("\t\n-> end pwd\n");
+		}
 		else if (server->num_built == CD)
 			ft_cd(server);
 		else if (server->num_built == LS)

@@ -33,8 +33,8 @@ int	ft_get(t_server *server)
 		ret = recv(server->sock, server->buffer, SIZE_BUF, 0);
 		concat_2dchar_in_buffer(server->buffer, server->sp_buffer, 2, " ");
 	}
-	ft_strcpy(server->buffer, "get");
+	ft_strcpy(server->buffer, "200");
 	send(server->sock, server->buffer, 3, 0);
 	close(fd);
-	return (1);
+	return (3);
 }

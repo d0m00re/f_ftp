@@ -1,4 +1,5 @@
 #include "ft_string.h"
+#include "ft_display.h"
 #include "server.h"
 #include <unistd.h>
 #include <sys/stat.h>
@@ -21,8 +22,14 @@ int ft_cd(t_server *server)
 	{
 		if (server->actual)
 			free(server->actual);
-		server->actual = getcwd(malloc(1024), 1024);
-		ft_strcpy(server->buffer, "200");
+		if (!(server->actual = getcwd(malloc(1024), 1024)))
+		{
+			ft_putstr("--> erro getcwd ...\n");
+			ft_strcpy(server->buffer, "500");
+			return (0);
+		}
+		else
+			ft_strcpy(server->buffer, "200");
 	}
 	send(server->sock, server->buffer, 3, 0);
 	return (0);

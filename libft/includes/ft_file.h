@@ -37,4 +37,17 @@ char	*ft_read_file(char *path);
 int		ft_file_write_begin(char *path, char *data, size_t size);
 int		ft_file_write_end(char *path, char *data, size_t size);
 
+/*
+** REPERTORIES MANAGE
+*/
+
+/*
+** FILE AND REPERTORIES
+*/
+
+int rep_exist(char *name);
+int get_rep_size_without_hide(char *name);
+char *get_rep_string_without_hide_with_size(char *name, int len);
+char *get_rep_string(char *name, int *len);
+
 #endif

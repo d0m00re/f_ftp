@@ -11,6 +11,11 @@
 #include <string.h>
 #include "client.h"
 
+
+/*
+** dans le cas ou on a un taille de 3 c est ok
+*/
+
 //int manage_get_client(int client->sock, char **client->input, char client->buffer[1024], size_t size_buf, int nb_client->input)
 int manage_get_client(t_client *client)
 {
@@ -35,9 +40,7 @@ int manage_get_client(t_client *client)
 		// case where we write in the thile
 		if (client->size_buf > 3) // when we have data bitch
 		{
-			//free client->input
 			client->sp_buffer = ft_strsplit_nb_word(client->buffer, ' ', &(client->size_sp));
-			//server->num_built = find_builtin(client->sp_buffer[0]);
 			if (find_builtin(client->sp_buffer[0]) == GET && client->size_sp >= 2)
 				ft_file_write_end(client->sp_buffer[1], &(client->buffer[(size_t)len_header]), ((size_t)client->size_buf - len_header));
 			else
@@ -50,5 +53,5 @@ int manage_get_client(t_client *client)
 		else
 			c = 1;
         }
-        return (1);
+        return (client->size_buf);
 }

@@ -25,7 +25,6 @@ int		ft_file_write_begin(char *path, char *data, size_t size)
 	int	fd;
 	int	ret;
 
-	printf("*** WRITE BEGIN: %zu\n", size);
 	if (!path || !data)
 		return (-1);
 	if ((fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0777)) == -1)
@@ -40,7 +39,6 @@ int		ft_file_write_end(char *path, char *data, size_t size)
 {
 	int	fd;
 
-	printf("******* WRITE END : %zu\n", size);
 	if (!path || !data)
 		return (-1);
 	if ((fd = open(path,  O_APPEND | O_WRONLY, 0777)) == -1)

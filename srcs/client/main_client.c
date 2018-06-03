@@ -48,7 +48,10 @@ int	main_client(t_client *client)
 		ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	}
 	else if (num_builtin == GET && client->size_sp == 2)
+	{
 		ret = manage_get_client(client);
+		//ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
+	}
 	else if (num_builtin == PWD && client->size_sp == 1)
 	{
 		send(client->sock, "pwd", 3, 0);
@@ -77,8 +80,9 @@ int	main_client(t_client *client)
 	else
 		ft_usage_builtin(num_builtin);
 	ft_putchar('\n');
-	ft_putstr_limit(client->buffer, SIZE_BUF);	
 	if (ret == 3 && ft_strcmp(client->buffer, "700") == 0)
 		return (700);
+	ft_putstr_limit(client->buffer, ret);
+	ft_putstr("\n\n");
 	return (num_builtin);
 }
