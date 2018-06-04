@@ -19,6 +19,7 @@
 #include <sys/socket.h>
 #include "ft_file.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int			ft_ls(t_server *server)
 {
@@ -34,12 +35,12 @@ int			ft_ls(t_server *server)
 	}
 	else
 	{
-		ft_putstr("* good ls\n");
+		printf("* good ls : %d\n", len);
 		ft_strcpy(server->buffer, "200 ");
 		ft_strcat(server->buffer, buffer);
 		server->size_buf = len + 4;
 		free(buffer);
 	}
-	send(server->sock, server->buffer, len, 0);
+	send(server->sock, server->buffer, server->size_buf, 0);
 	return (0);
 }

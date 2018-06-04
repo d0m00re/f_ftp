@@ -57,6 +57,7 @@ int	main(int ac, char **av)
 		server->sock = accept(sock, (struct sockaddr*)&csin, &cslen);
 		if ((pid = fork()) == -1)
 		{
+			ft_putstr("*=* bye bye *=*\n");
 			close(server->sock);
 			continue;
 		}

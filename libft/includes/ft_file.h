@@ -50,4 +50,12 @@ int get_rep_size_without_hide(char *name);
 char *get_rep_string_without_hide_with_size(char *name, int len);
 char *get_rep_string(char *name, int *len);
 
+/*
+** checker if path if no dessendant ~
+*/
+
+char	*get_rep_with_pathname(char *target);
+int	valid_path_no_dess(char *actual_path, char *target);
+int	valid_path_no_dess_auto(char *target);
+
 #endif

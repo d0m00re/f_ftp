@@ -53,7 +53,8 @@ SRC_M_STRING =  ft_strlen.c ft_strcmp.c ft_strdup.c ft_strcpy.c ft_strcat.c repl
 SRC_M_STDLIB = ft_atoi.c
 SRC_M_LINKED_LIST = ft_lstcreate_elem.c ft_lstpush_back.c   ft_lstpush_front.c ft_lstdestroy.c ft_lstdisplay.c
 #SRC_M_GRAPH = ft_make_graph.c ft_destroy_graph.c ft_display_graph.c ft_graph_exist.c
-SRC_M_FILE = ft_file_exist.c       ft_file_return_data.c ft_file_size.c ft_file_write.c ft_file_read.c manage_repertorie.c
+SRC_M_FILE = ft_file_exist.c       ft_file_return_data.c ft_file_size.c ft_file_write.c ft_file_read.c manage_repertorie.c\
+		valid_path_no_dess.c
 
 SRC_M_TAB2D_INT = make_2dtab_int.c destroy_2dtab_int.c get_value_2dtab_int.c set_value_2dtab_int.c
 
