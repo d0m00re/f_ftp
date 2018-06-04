@@ -52,4 +52,6 @@ char		*concat_2dchar_in_buffer(char *buffer, char **tab_string, int size_tab_str
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strchr(const char *s, int c);
 
+char		*ft_strextract_before_rchr(char *str, char sep);
+
 #endif

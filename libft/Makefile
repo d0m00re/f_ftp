@@ -49,12 +49,13 @@ SRC_M_DISPLAY = ft_putchar.c ft_putstr.c ft_putstr_ret.c
 SRC_M_STRING =  ft_strlen.c ft_strcmp.c ft_strdup.c ft_strcpy.c ft_strcat.c replace.c\
 		ft_strsplit.c ft_concat_with_sep.c\
 		ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_isseparator.c ft_memset.c ft_bzero.c\
-		extract_string_diff.c concat_2dchar_in_buffer.c ft_strchr.c
+		extract_string_diff.c concat_2dchar_in_buffer.c ft_strchr.c\
+		ft_strextract_before_rchr.c
 SRC_M_STDLIB = ft_atoi.c
 SRC_M_LINKED_LIST = ft_lstcreate_elem.c ft_lstpush_back.c   ft_lstpush_front.c ft_lstdestroy.c ft_lstdisplay.c
 #SRC_M_GRAPH = ft_make_graph.c ft_destroy_graph.c ft_display_graph.c ft_graph_exist.c
 SRC_M_FILE = ft_file_exist.c       ft_file_return_data.c ft_file_size.c ft_file_write.c ft_file_read.c manage_repertorie.c\
-		valid_path_no_dess.c
+		valid_path_no_dess.c is_rep.c
 
 SRC_M_TAB2D_INT = make_2dtab_int.c destroy_2dtab_int.c get_value_2dtab_int.c set_value_2dtab_int.c
 

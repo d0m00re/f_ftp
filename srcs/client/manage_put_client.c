@@ -40,6 +40,12 @@ int			manage_put_client(t_client *client)
 	int		ret;
 
 	ret = 0;
+	if (is_file(client->sp_buffer[1]) == 0)
+	{
+		ft_strcpy(client->buffer, "889 : error is not a file");
+		client->size_buf = ft_strlen(client->buffer);
+		return (1);
+	}
 	if ((fd = open(client->sp_buffer[1], O_RDONLY)) == -1)
 	{
 		ft_strcpy(client->buffer, "888 : error open file.");

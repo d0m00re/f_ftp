@@ -11,6 +11,17 @@
 #include <string.h>
 #include "client.h"
 
+static char *extract_last_signif(char *s)
+{
+        char *str;
+
+        if (!(str = ft_strrchr(s, '/')))
+                return (s);
+        str++;
+        if (!(str))
+                return (0);
+        return (str);
+}
 
 /*
 ** dans le cas ou on a un taille de 3 c est ok
@@ -21,9 +32,12 @@ int manage_get_client(t_client *client)
 	char *old_string;
 	int c;
 	size_t len_header;
+	char *last_sign;
 
 	if (client->size_sp < 2)
 		exit(1);
+	if (!(last_sign = extract_last_signif(client->sp_buffer[1])))
+		last_sign = client->sp_buffer[1];
 	c = 0;
 	len_header = ft_strlen(client->sp_buffer[0]) + ft_strlen(client->sp_buffer[1]) + 2;
 	concat_2dchar_in_buffer(client->buffer, client->sp_buffer, 2, " ");
@@ -34,7 +48,7 @@ int manage_get_client(t_client *client)
 	{
 		return (0);
 	}
-	ft_file_write_begin(client->sp_buffer[1], &(client->buffer[(size_t)len_header]), (size_t)client->size_buf - len_header);
+	ft_file_write_begin(last_sign, &(client->buffer[(size_t)len_header]), (size_t)client->size_buf - len_header);
 	send(client->sock, old_string, ft_strlen(old_string), 0);
 	while (!c)
 	{
@@ -42,7 +56,7 @@ int manage_get_client(t_client *client)
 		{
 			client->sp_buffer = ft_strsplit_nb_word(client->buffer, ' ', &(client->size_sp));
 			if (find_builtin(client->sp_buffer[0]) == GET && client->size_sp >= 2)
-				ft_file_write_end(client->sp_buffer[1], &(client->buffer[(size_t)len_header]), ((size_t)client->size_buf - len_header));
+				ft_file_write_end(last_sign, &(client->buffer[(size_t)len_header]), ((size_t)client->size_buf - len_header));
 			else
 			{
 				ft_putstr("Error get client.\n");

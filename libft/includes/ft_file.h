@@ -58,4 +58,11 @@ char	*get_rep_with_pathname(char *target);
 int	valid_path_no_dess(char *actual_path, char *target);
 int	valid_path_no_dess_auto(char *target);
 
+/*
+** CHECK FILE TYPE
+*/
+
+int	is_rep(const char *path);
+int	is_file(const char *path);
+
 #endif

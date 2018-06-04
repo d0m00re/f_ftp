@@ -12,7 +12,7 @@
 ** restrict name of file put by extratc last significative name of file
 */
 
-char *extract_last_signif(char *s)
+static char *extract_last_signif(char *s)
 {
 	char *str;
 
@@ -30,7 +30,10 @@ int ft_put(t_server *server)
 	char *last_sign;
 
 	c = 0;
-	last_sign = extract_last_signif(server->sp_buffer[1]);
+	if (server->size_sp < 2)
+		exit(1);
+	if (!(last_sign = extract_last_signif(server->sp_buffer[1])))
+		last_sign = server->sp_buffer[1];
 	printf("---> %s\n", last_sign);
 	server->len_header = ft_strlen(server->sp_buffer[0]) + ft_strlen(server->sp_buffer[1]) + 2;
 	ft_file_write_begin(last_sign, &(server->buffer[(size_t)server->len_header]), (size_t)server->size_buf - server->len_header);
