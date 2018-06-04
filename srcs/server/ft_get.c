@@ -18,7 +18,7 @@ static int check_futur_path(t_server *s)
 
 	// step 1 : recuperer le chemin sans le nom de fichier
 	if (!(path = ft_strextract_before_rchr(s->sp_buffer[1], '/')))
-		return (0);
+		return (1);
 	// step 2 : concatener le path du server avec le path actuel
 	size = ft_strlen(path) + ft_strlen(s->actual);
 	if (!(path_to_test = malloc(sizeof(char) * (size + 2))))
@@ -29,6 +29,8 @@ static int check_futur_path(t_server *s)
 	ft_strcpy(path_to_test, s->actual);
 	ft_strcat(path_to_test, "/");
 	ft_strcat(path_to_test, path);
+
+	printf("s->full : %s | path to test : %s\n", s->actual, path_to_test);
 
 	// 3 : checker la validite
 	valid_path = valid_path_no_dess(s->full, path_to_test);
@@ -52,7 +54,7 @@ int	ft_get(t_server *server)
 	ft_putstr("begin futur path get\n");
 	if (check_futur_path(server) == 0)
 	{
-		ft_putstr("--- INVALID PATH\n");
+		ft_putstr("-*-*- INVALID PATH\n");
 		send(server->sock, "511", 3, 0);
 		return (3);
 	}

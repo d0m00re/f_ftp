@@ -64,5 +64,7 @@ int	valid_path_no_dess_auto(char *target);
 
 int	is_rep(const char *path);
 int	is_file(const char *path);
+int	is_type_file_exist(const char *path);
+int	is_not_file_but_other(const char *path);
 
 #endif

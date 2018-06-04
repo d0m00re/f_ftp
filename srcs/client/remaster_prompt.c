@@ -12,7 +12,8 @@ void	remaster_prompt(char *str, int size)
 	if (strncmp(str, "20", 2) == 0)
 		ft_putstr("SUCCESS : ");
 	else
-		ft_putstr("FAIL : ");
-	ft_putstr(&(str[4]));
+		ft_putstr("ERROR : ");
+	//ft_putstr(&(str[4]));
+	ft_putstr(str);
 	ft_putstr("\n\n");
 }

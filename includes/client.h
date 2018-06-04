@@ -60,6 +60,7 @@ int				manage_get_client(t_client *client);
 int				create_client(char *addr, int port);
 
 void			ft_usage_builtin(int num);
+void			ft_usage_builtin_store(t_client *client, int num);
 
 void			remaster_prompt(char *str, int size);
 

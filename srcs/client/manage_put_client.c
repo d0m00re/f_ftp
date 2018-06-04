@@ -60,11 +60,15 @@ int			manage_put_client(t_client *client)
 		if ((send(client->sock, client->buffer, len + size_header, 0)) == -1)
 			return (ft_putstr_ret("put : error send data\n", 1));
 		if ((ret = recv(client->sock, client->buffer, SIZE_BUF, 0)) == -1)
-			return (ft_putstr_ret("put ; error recv data\n", 1));
+			return (ft_putstr_ret("put : error recv data\n", 1));
+		if (ret == 3)
+		{
+			client->size_buf = 3;
+			return (1);
+		}
 		concat_2dchar_in_buffer(client->buffer, client->sp_buffer, 2, " ");
 	}
 	if ((send(client->sock, "put", 3, 0)) == -1)
 		return (ft_putstr_ret("put : error last message\n", 1));
-	printf("End return 0 ....\n");
 	return (ret_and_close(fd, 0));
 }

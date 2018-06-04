@@ -80,12 +80,6 @@ void	init_main_client(t_client *client, int *num_builtin, int *ret)
 
 int	end_main_client(t_client *client, int num_builtin)
 {
-/*	ft_putchar('\n');
-	if (client->size_buf == 3 && ft_strcmp(client->buffer, "700") == 0)
-		return (700);
-	ft_putstr_limit(client->buffer, client->size_buf);
-	ft_putstr("\n\n");
-*/
 	remaster_prompt(client->buffer, client->size_buf);
 	return (num_builtin);
 }
@@ -112,9 +106,9 @@ int		main_client(t_client *client)
 		my_send_and_recv(client);
 	else if (num_builtin == MKDIR && client->size_sp == 2)
 		my_send_and_recv(client);
-	else if (num_builtin == QUIT && client->size_sp == 1)
-		manual_add_info_client(client, "700");
+	else if (num_builtin == QUIT)
+		return (700);
 	else
-		ft_usage_builtin(num_builtin);
+		ft_usage_builtin_store(client, num_builtin);
 	return (end_main_client(client, num_builtin));
 }
