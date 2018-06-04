@@ -16,7 +16,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <arpa/inet.h>
-#include <netinet/in.h> // /usr/include/netinet/in.h
+#include <netinet/in.h>
 
 #include "mtf_input.h"
 #include "ft_string.h"
@@ -44,63 +44,75 @@ int		find_builtin(char *str)
 	return (ERROR_CMD);
 }
 
-int		main_client(t_client *client)
+int		my_send_and_recv(t_client *client)
 {
-	int	num_builtin;
-	int	ret;
+	int ret;
 
-	ft_bzero(client->buffer, SIZE_BUF);
-	client->size_buf = 0;
-	client->sp_buffer = ft_strsplit_nb_word(client->input, ' ', &(client->size_sp));
-	num_builtin = find_builtin(client->sp_buffer[0]);
 	ret = 0;
-
-
-
-
-
-	if (num_builtin == PUT && client->size_sp == 2)
-	{
-		if ((ret = manage_put_client(client)) == 0)
-			ret = recv(client->sock, client->buffer, SIZE_BUF, 0);
-	}
-	else if (num_builtin == GET && client->size_sp == 2)
-		ret = manage_get_client(client);
-	else if (num_builtin == PWD && client->size_sp == 1)
-	{
-		send(client->sock, "pwd", 3, 0);
-		client->size_buf = recv(client->sock, client->buffer, SIZE_BUF, 0);
-	}
-	else if (num_builtin == CD && (client->size_sp == 1 || client->size_sp == 2))
-	{
-		send(client->sock, client->input, ft_strlen(client->input), 0);
-		client->size_buf = recv(client->sock, client->buffer, SIZE_BUF, 0);
-	}
-	else if (num_builtin == LS && client->size_sp == 1)
-	{
-		send(client->sock, client->input, ft_strlen(client->input), 0);
-		client->size_buf = recv(client->sock, client->buffer, SIZE_BUF, 0);
-	}
-	else if (num_builtin == MKDIR && client->size_sp == 2)
-	{
-		send(client->sock, client->input, ft_strlen(client->input), 0);
-		client->size_buf = recv(client->sock, client->buffer, SIZE_BUF, 0);
-	}
-	else if (num_builtin == QUIT && client->size_sp == 1)
+	if ((send(client->sock, client->input, ft_strlen(client->input), 0)) == -1)
+		ret = 1;
+	if ((client->size_buf = recv(client->sock,\
+	client->buffer, SIZE_BUF, 0)) == -1)
+		ret = 1;
+	if (ret)
 	{
 		ft_strcpy(client->buffer, "700");
 		client->size_buf = 3;
 	}
-	else
-		ft_usage_builtin(num_builtin);
+	return (ret);
+}
 
+void		manual_add_info_client(t_client *client, char *msg)
+{
+	ft_strcpy(client->buffer, msg);
+	client->size_buf = ft_strlen(msg);
+}
 
+void	init_main_client(t_client *client, int *num_builtin, int *ret)
+{
+	ft_bzero(client->buffer, SIZE_BUF);
+	client->size_buf = 0;
+	client->sp_buffer = ft_strsplit_nb_word(client->input, ' ',\
+	&(client->size_sp));
+	*num_builtin = find_builtin(client->sp_buffer[0]);
+	*ret = 0;
+}
 
-
+int	end_main_client(t_client *client, int num_builtin)
+{
 	ft_putchar('\n');
 	if (client->size_buf == 3 && ft_strcmp(client->buffer, "700") == 0)
 		return (700);
 	ft_putstr_limit(client->buffer, client->size_buf);
 	ft_putstr("\n\n");
 	return (num_builtin);
+}
+
+int		main_client(t_client *client)
+{
+	int	num_builtin;
+	int	ret;
+
+	init_main_client(client, &num_builtin, &ret);
+	if (num_builtin == PUT && client->size_sp == 2)
+	{
+		if ((ret = manage_put_client(client)) == 0)
+			client->size_buf = recv(client->sock, client->buffer, SIZE_BUF, 0);
+	}
+	else if (num_builtin == GET && client->size_sp == 2)
+		ret = manage_get_client(client);
+	else if (num_builtin == PWD && client->size_sp == 1)
+		my_send_and_recv(client);
+	else if (num_builtin == CD && (client->size_sp == 1 ||\
+	client->size_sp == 2))
+		my_send_and_recv(client);
+	else if (num_builtin == LS && client->size_sp == 1)
+		my_send_and_recv(client);
+	else if (num_builtin == MKDIR && client->size_sp == 2)
+		my_send_and_recv(client);
+	else if (num_builtin == QUIT && client->size_sp == 1)
+		manual_add_info_client(client, "700");
+	else
+		ft_usage_builtin(num_builtin);
+	return (end_main_client(client, num_builtin));
 }

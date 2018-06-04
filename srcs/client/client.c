@@ -39,6 +39,18 @@ int						usage(char *str)
 	return (-1);
 }
 
+int						main_create_client(t_client *client, char *addr, int port)
+{
+	if (ft_strcmp(addr, "localhost") == 0)
+	{
+		if ((client->sock = create_client("127.0.0.1", port)) == -1) //creation
+			return (1);
+	}
+	else if ((client->sock = create_client(addr, port)) == -1) //creation
+		return (1);
+	return (0);
+}
+
 int						main(int ac, char **av)
 {
 	int					port;
@@ -53,7 +65,7 @@ int						main(int ac, char **av)
 		return (1);
 	}
 	client = make_client();
-	if ((client->sock = create_client(av[1], port)) == -1) //creation
+	if (main_create_client(client, av[1], port))
 		return (1);
 	ret = 0;
 	while (ret != 700)

@@ -49,4 +49,7 @@ char		*extract_string_diff(char *main, char *last);
 
 char		*concat_2dchar_in_buffer(char *buffer, char **tab_string, int size_tab_string, char *sep);
 
+char		*ft_strrchr(const char *s, int c);
+char		*ft_strchr(const char *s, int c);
+
 #endif
