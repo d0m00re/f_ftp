@@ -61,4 +61,6 @@ int				create_client(char *addr, int port);
 
 void			ft_usage_builtin(int num);
 
+void			remaster_prompt(char *str, int size);
+
 #endif

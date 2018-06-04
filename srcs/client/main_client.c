@@ -80,11 +80,13 @@ void	init_main_client(t_client *client, int *num_builtin, int *ret)
 
 int	end_main_client(t_client *client, int num_builtin)
 {
-	ft_putchar('\n');
+/*	ft_putchar('\n');
 	if (client->size_buf == 3 && ft_strcmp(client->buffer, "700") == 0)
 		return (700);
 	ft_putstr_limit(client->buffer, client->size_buf);
 	ft_putstr("\n\n");
+*/
+	remaster_prompt(client->buffer, client->size_buf);
 	return (num_builtin);
 }
 
