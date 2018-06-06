@@ -40,6 +40,7 @@ t_server			*server_make(char *server_name)
 		return (0);
 	server->deph = 0;
 	server->name = strdup(server_name);
+	server->sp_buffer = 0;
 	server->valid_ftp = 0;
 	server->valid_path = 1;
 	server->rep_is_create = ft_create_rep_if_no_exist(server_name);

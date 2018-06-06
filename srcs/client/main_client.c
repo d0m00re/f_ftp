@@ -27,7 +27,6 @@
 
 int			find_builtin(char *str)
 {
-	ft_putstr(str);
 	if (!ft_strcmp(str, "ls"))
 		return (LS);
 	else if (!ft_strcmp(str, "cd"))
@@ -58,6 +57,7 @@ void		init_main_client(t_client *client, int *num_builtin, int *ret)
 {
 	ft_bzero(client->buffer, SIZE_BUF);
 	client->size_buf = 0;
+	client->sp_buffer = ft_strsplit_free(client->sp_buffer);
 	client->sp_buffer = ft_strsplit_nb_word(client->input, ' ',\
 	&(client->size_sp));
 	*num_builtin = find_builtin(client->sp_buffer[0]);
@@ -96,5 +96,6 @@ int			main_client(t_client *client)
 		return (700);
 	else
 		ft_usage_builtin_store(client, num_builtin);
+	client->sp_buffer = ft_strsplit_free(client->sp_buffer);
 	return (end_main_client(client, num_builtin));
 }

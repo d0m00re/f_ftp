@@ -37,4 +37,9 @@ void	ft_putnbr_ui(unsigned int nb);
 void	ft_putnbr_base(int nb, unsigned int base);
 void	ft_putnbr_base_ui(unsigned int nb, unsigned int base);
 
+void	ft_putstr_gen(char *str, char *color);
+void	ft_putstr_green(char *str);
+void	ft_putstr_red(char *str);
+void	ft_color_reset(void);
+
 #endif

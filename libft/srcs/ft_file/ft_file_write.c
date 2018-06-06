@@ -27,6 +27,7 @@ int		ft_file_write_begin(char *path, char *data, size_t size)
 
 	if (!path || !data)
 		return (-1);
+	printf("path : %s\n", path);
 	if ((fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0777)) == -1)
 		return (-2);
 	if ((ret = write(fd, (void *)data, size)) == -1)
@@ -35,14 +36,20 @@ int		ft_file_write_begin(char *path, char *data, size_t size)
 	return (0);
 }
 
+#include <errno.h>
+
 int		ft_file_write_end(char *path, char *data, size_t size)
 {
 	int	fd;
 
+	//printf("%s | %s | %zu\n", path, data, size);
 	if (!path || !data)
 		return (-1);
 	if ((fd = open(path, O_APPEND | O_WRONLY, 0777)) == -1)
+	{
+		perror("FUCK OFFFF : ");
 		return (-2);
+	}
 	if ((write(fd, data, size)) == -1)
 		return (-3);
 	close(fd);

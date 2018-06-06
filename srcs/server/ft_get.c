@@ -41,6 +41,7 @@ static int		check_futur_path(t_server *s)
 	ft_strcat(path_to_test, path);
 	valid_path = valid_path_no_dess(s->full, path_to_test);
 	free(path_to_test);
+	free(path);
 	return (valid_path);
 }
 
@@ -78,11 +79,13 @@ int				ft_get(t_server *server)
 	while ((len = read(fd, &(server->buffer[server->len_header]),\
 	SIZE_BUF - server->len_header)) > 0)
 	{
+		printf("Turn .... : %lu\n", len + server->len_header);
 		if ((send(server->sock, server->buffer,\
 		len + server->len_header, 0)) == -1)
 			return (1);
 		ret = recv(server->sock, server->buffer, SIZE_BUF, 0);
 		concat_2dchar_in_buffer(server->buffer, server->sp_buffer, 2, " ");
+		printf("Turnos ...\n");
 	}
 	ft_strcpy(server->buffer, "200");
 	send(server->sock, server->buffer, 3, 0);

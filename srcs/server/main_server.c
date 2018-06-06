@@ -53,9 +53,11 @@ char	*main_server(t_server *server)
 		return (0);
 	}
 	server->num_built_old = server->num_built;
+	server->sp_buffer = ft_strsplit_free(server->sp_buffer);
 	server->sp_buffer = ft_strsplit_nb_word(server->buffer,\
 	' ', &(server->size_sp));
 	server->num_built = find_builtin(server->sp_buffer[0]);
 	core_main_server(server);
+	server->sp_buffer = ft_strsplit_free(server->sp_buffer);
 	return (0);
 }

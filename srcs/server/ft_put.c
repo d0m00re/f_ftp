@@ -45,15 +45,20 @@ static void	core_ft_put(t_server *server, char *last_sign, int *c)
 		&(server->size_sp));
 		server->num_built = find_builtin(server->sp_buffer[0]);
 		if (server->num_built == PUT && server->size_sp >= 2)
+		{
 			ft_file_write_end(last_sign,\
 			&(server->buffer[(size_t)server->len_header]),\
 			((size_t)server->size_buf - server->len_header));
+		}
 		else
 			*c = 1;
 	}
 	else
+	{
+		ft_putstr("Other affectation ....\n");
 		*c = 1;
-	send(server->sock, "200", 3, 0);
+	}
+	send(server->sock, "200 ", 4, 0);
 }
 
 int			ft_put(t_server *server)
@@ -73,9 +78,14 @@ int			ft_put(t_server *server)
 	ft_file_write_begin(last_sign,\
 	&(server->buffer[(size_t)server->len_header]),\
 	(size_t)server->size_buf - server->len_header);
-	if ((send(server->sock, "200", 3, 0)) == -1)
+	if ((send(server->sock, "200 ", 4, 0)) == -1)
 		return (ft_putstr_ret("ft_put : error send data to the client\n", 1));
+	printf("c : %d\n", c);
 	while (!c)
+	{
+		server->sp_buffer = ft_strsplit_free(server->sp_buffer);
 		core_ft_put(server, last_sign, &c);
+		server->sp_buffer = ft_strsplit_free(server->sp_buffer);
+	}
 	return (0);
 }

@@ -43,7 +43,8 @@ char **last_sign, char **old_string, int *c)
 	if (client->size_sp < 2)
 		return (update_client_and_ret(client, "856 : invalid nb argument", 0));
 	if (!(*last_sign = extract_last_signif(client->sp_buffer[1])))
-		*last_sign = client->sp_buffer[1];
+		*last_sign = ft_strdup(client->sp_buffer[1]);
+	printf("------> %s\n", *last_sign);
 	*c = 0;
 	len_header = ft_strlen(client->sp_buffer[0]) +\
 	ft_strlen(client->sp_buffer[1]) + 2;
@@ -65,13 +66,22 @@ int len_header, char *old_string, char *last_sign)
 	if ((client->size_buf = recv(client->sock,\
 	client->buffer, SIZE_BUF, 0)) > 3)
 	{
+		printf("SIZE BUF : %d\n", client->size_buf);
+		client->sp_buffer = 0; //ft_strsplit_free(client->sp_buffer);
 		client->sp_buffer = ft_strsplit_nb_word(client->buffer,\
 		' ', &(client->size_sp));
 		if (find_builtin(client->sp_buffer[0]) == GET && client->size_sp >= 2)
-			ft_file_write_end(last_sign, &(client->buffer[(size_t)len_header]),\
+		{
+			printf("FUCK OF OF COPY ... : %d|%s\n", client->size_buf - len_header, last_sign);
+			int t = ft_file_write_end(last_sign, &(client->buffer[(size_t)len_header]),\
 			((size_t)client->size_buf - len_header));
+			printf("---> %d\n", t);
+		}
 		else
+		{
+			free(old_string);
 			return (ft_putstr_ret("Error get client.\n", 0));
+		}
 		send(client->sock, old_string, ft_strlen(old_string), 0);
 	}
 	else
@@ -100,10 +110,16 @@ int			manage_get_client(t_client *client)
 		return (0);
 	while (!c)
 	{
+		printf("Turn bitch ....\n");
 		if ((c = core_manage_get_client(client, len_header,\
 		old_string, last_sign)) == 0)
 			return (0);
+		client->sp_buffer = 0;//ft_strsplit_free(client->sp_buffer);
 		c -= 1;
+		printf("--> %d\n", c);
 	}
+	free(old_string);
+	free(last_sign);
+	//client->sp_buffer = ft_strsplit_free(client->sp_buffer);
 	return (client->size_buf);
 }

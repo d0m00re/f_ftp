@@ -25,6 +25,7 @@
 
 #include "mtf_input.h"
 #include "ft_string.h"
+#include "ft_stdlib.h"
 
 #include "server.h"
 #include "client.h"
@@ -60,7 +61,7 @@ int					main(int ac, char **av)
 
 	if (ac != 3)
 		return (usage(av[0]));
-	if ((port = atoi(av[2])) < 1)
+	if ((port = ft_atoi(av[2])) < 1)
 		return (ft_putstr_ret("wrong port.\n", 1));
 	client = make_client();
 	if (main_create_client(client, av[1], port))
