@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_ret.c                                    :+:      :+:    :+:   */
+/*   ret_and_close.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/03 21:23:03 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/05 22:50:52 by alhelson         ###   ########.fr       */
+/*   Created: 2018/06/05 05:17:33 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/05 05:17:54 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_display.h"
+#include <unistd.h>
 
-int	ft_putstr_ret(char const *str, int ret)
+int		ret_and_close(int fd, int ret)
 {
-	if (!str)
-		return (1);
-	ft_putstr(str);
+	close(fd);
 	return (ret);
 }

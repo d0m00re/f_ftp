@@ -29,10 +29,7 @@ char		*extract_string_diff(char *main, char *last)
 	char	*new;
 
 	if (!main || !last)
-	{
-		ft_putstr("|||||| extract string diff error ...\n");
 		return (0);
-	}
 	count = 0;
 	s1 = ft_strlen(main);
 	s2 = ft_strlen(last);
@@ -40,15 +37,11 @@ char		*extract_string_diff(char *main, char *last)
 		return (0);
 	if (!(new = malloc(sizeof(char) * (s2 - s1 + 1))))
 		return (0);
-	ft_putchar('a');
 	while (s1 + count < s2)
 	{
-		ft_putchar('O');
 		new[count] = last[s1 + count];
 		count++;
 	}
-	ft_putchar('x');
 	new[count] = 0;
-	ft_putchar('|');
 	return (new);
 }

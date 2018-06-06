@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   concat_2dchar_in_buffer.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/05 23:00:23 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/05 23:02:30 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_string.h"
 
 /*
 ** [tab] [sep] [tab] [sep]
 */
 
-char *concat_2dchar_in_buffer(char *buffer, char **tab_string, int size_tab_string, char *sep)
+char	*concat_2dchar_in_buffer(char *buffer, char **tab_string,\
+		int size_tab_string, char *sep)
 {
 	int c;
 

@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 15:57:55 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/01 02:04:16 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/05 23:11:02 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,28 @@ int		ft_file_write_end(char *path, char *data, size_t size);
 ** FILE AND REPERTORIES
 */
 
-int rep_exist(char *name);
-int get_rep_size_without_hide(char *name);
-char *get_rep_string_without_hide_with_size(char *name, int len);
-char *get_rep_string(char *name, int *len);
+int		rep_exist(char *name);
+int		get_rep_size_without_hide(char *name);
+char	*get_rep_string_without_hide_with_size(char *name, int len);
+char	*get_rep_string(char *name, int *len);
 
 /*
 ** checker if path if no dessendant ~
 */
 
 char	*get_rep_with_pathname(char *target);
-int	valid_path_no_dess(char *actual_path, char *target);
-int	valid_path_no_dess_auto(char *target);
+int		valid_path_no_dess(char *actual_path, char *target);
+int		valid_path_no_dess_auto(char *target);
 
 /*
 ** CHECK FILE TYPE
 */
 
-int	is_rep(const char *path);
-int	is_file(const char *path);
-int	is_type_file_exist(const char *path);
-int	is_not_file_but_other(const char *path);
+int		is_rep(const char *path);
+int		is_file(const char *path);
+int		is_type_file_exist(const char *path);
+int		is_not_file_but_other(const char *path);
+
+int		ret_and_close(int fd, int ret);
 
 #endif

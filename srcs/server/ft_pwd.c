@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/05 05:52:04 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/05 05:52:12 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_display.h"
 #include "ft_file.h"
 #include "server.h"
@@ -6,9 +18,9 @@
 #include <sys/socket.h>
 #include <stdlib.h>
 
-int ft_pwd(t_server *server)
+int			ft_pwd(t_server *server)
 {
-	char *new;
+	char	*new;
 
 	new = extract_string_diff(server->full, server->actual);
 	if (!new)

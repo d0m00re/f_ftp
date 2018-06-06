@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_builtin.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/05 05:51:16 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/05 05:51:21 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 #include "ft_string.h"
 #include "ft_display.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-int find_builtin(char *str)
+int	find_builtin(char *str)
 {
 	if (!str)
 		return (ERROR_CMD);

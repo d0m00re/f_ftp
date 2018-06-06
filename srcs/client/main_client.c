@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 00:12:32 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/04 00:13:45 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/05 05:12:17 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@
 #include "setting.h"
 #include "client.h"
 
-int		find_builtin(char *str)
+int			find_builtin(char *str)
 {
+	ft_putstr(str);
 	if (!ft_strcmp(str, "ls"))
 		return (LS);
 	else if (!ft_strcmp(str, "cd"))
@@ -34,7 +35,10 @@ int		find_builtin(char *str)
 	else if (!ft_strcmp(str, "get"))
 		return (GET);
 	else if (!(ft_strcmp(str, "put")))
+	{
+		ft_putstr("put.\n");
 		return (PUT);
+	}
 	else if (!ft_strcmp(str, "pwd"))
 		return (PWD);
 	else if (!ft_strcmp(str, "quit"))
@@ -44,31 +48,13 @@ int		find_builtin(char *str)
 	return (ERROR_CMD);
 }
 
-int		my_send_and_recv(t_client *client)
-{
-	int ret;
-
-	ret = 0;
-	if ((send(client->sock, client->input, ft_strlen(client->input), 0)) == -1)
-		ret = 1;
-	if ((client->size_buf = recv(client->sock,\
-	client->buffer, SIZE_BUF, 0)) == -1)
-		ret = 1;
-	if (ret)
-	{
-		ft_strcpy(client->buffer, "700");
-		client->size_buf = 3;
-	}
-	return (ret);
-}
-
 void		manual_add_info_client(t_client *client, char *msg)
 {
 	ft_strcpy(client->buffer, msg);
 	client->size_buf = ft_strlen(msg);
 }
 
-void	init_main_client(t_client *client, int *num_builtin, int *ret)
+void		init_main_client(t_client *client, int *num_builtin, int *ret)
 {
 	ft_bzero(client->buffer, SIZE_BUF);
 	client->size_buf = 0;
@@ -78,16 +64,16 @@ void	init_main_client(t_client *client, int *num_builtin, int *ret)
 	*ret = 0;
 }
 
-int	end_main_client(t_client *client, int num_builtin)
+int			end_main_client(t_client *client, int num_builtin)
 {
 	remaster_prompt(client->buffer, client->size_buf);
 	return (num_builtin);
 }
 
-int		main_client(t_client *client)
+int			main_client(t_client *client)
 {
-	int	num_builtin;
-	int	ret;
+	int		num_builtin;
+	int		ret;
 
 	init_main_client(client, &num_builtin, &ret);
 	if (num_builtin == PUT && client->size_sp == 2)

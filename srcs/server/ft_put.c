@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_put.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/06 04:27:40 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/06 04:28:01 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_display.h"
 #include "ft_file.h"
 #include "server.h"
@@ -12,9 +24,9 @@
 ** restrict name of file put by extratc last significative name of file
 */
 
-static char *extract_last_signif(char *s)
+static char	*extract_last_signif(char *s)
 {
-	char *str;
+	char	*str;
 
 	if (!(str = ft_strrchr(s, '/')))
 		return (s);
@@ -24,53 +36,46 @@ static char *extract_last_signif(char *s)
 	return (str);
 }
 
-int ft_put(t_server *server)
+static void	core_ft_put(t_server *server, char *last_sign, int *c)
 {
-	int c;
-	char *last_sign;
+	server->size_buf = recv(server->sock, server->buffer, SIZE_BUF, 0);
+	if (server->size_buf > 3)
+	{
+		server->sp_buffer = ft_strsplit_nb_word(server->buffer, ' ',\
+		&(server->size_sp));
+		server->num_built = find_builtin(server->sp_buffer[0]);
+		if (server->num_built == PUT && server->size_sp >= 2)
+			ft_file_write_end(last_sign,\
+			&(server->buffer[(size_t)server->len_header]),\
+			((size_t)server->size_buf - server->len_header));
+		else
+			*c = 1;
+	}
+	else
+		*c = 1;
+	send(server->sock, "200", 3, 0);
+}
+
+int			ft_put(t_server *server)
+{
+	int		c;
+	char	*last_sign;
 
 	c = 0;
-	printf("Size : %d\n", server->size_sp);
 	if (server->size_sp < 2)
-	{
-		send(server->sock, "777", 3, 0);
-		return (1);
-	}
+		return (send_and_return(server, "777", 3, 3));
 	if (!(last_sign = extract_last_signif(server->sp_buffer[1])))
 		last_sign = server->sp_buffer[1];
 	if (is_not_file_but_other(server->sp_buffer[1]))
-	{
-		printf("||||||||| YOlo bitch ....\n");
-		send(server->sock, "778", 3, 0);
-		return (1);
-	}
-	server->len_header = ft_strlen(server->sp_buffer[0]) + ft_strlen(server->sp_buffer[1]) + 2;
-	ft_file_write_begin(last_sign, &(server->buffer[(size_t)server->len_header]), (size_t)server->size_buf - server->len_header);
+		return (send_and_return(server, "532", 3, 1));
+	server->len_header = ft_strlen(server->sp_buffer[0]) +\
+	ft_strlen(server->sp_buffer[1]) + 2;
+	ft_file_write_begin(last_sign,\
+	&(server->buffer[(size_t)server->len_header]),\
+	(size_t)server->size_buf - server->len_header);
 	if ((send(server->sock, "200", 3, 0)) == -1)
-	{
-		ft_putstr("ft_put : error send data to the client\n");
-		return (1);
-	}
+		return (ft_putstr_ret("ft_put : error send data to the client\n", 1));
 	while (!c)
-	{
-		server->size_buf = recv(server->sock, server->buffer, SIZE_BUF, 0); // case where we write in the thile
-		if (server->size_buf > 3) 
-		{
-			server->sp_buffer = ft_strsplit_nb_word(server->buffer, ' ', &(server->size_sp));
-			server->num_built = find_builtin(server->sp_buffer[0]);
-			if (server->num_built == PUT && server->size_sp >= 2)
-				ft_file_write_end(last_sign, &(server->buffer[(size_t)server->len_header]), ((size_t)server->size_buf - server->len_header));
-			else
-			{
-				printf("Error put : num built : %d | %s | %d | %d\n", server->num_built, server->sp_buffer[0], server->size_sp, server->size_buf);
-				c = 1;
-			}
-		}
-		else
-			c = 1;
-		// on attein ce cas dans le cas lorsque l on arrive dans le cas ou on nous envoi juste le put
-		send(server->sock, "200", 3, 0);
-		//case where we end this sheat
-	}
+		core_ft_put(server, last_sign, &c);
 	return (0);
 }

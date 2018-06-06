@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_server.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/05 06:07:06 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/05 06:07:29 by alhelson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_string.h"
 #include "ft_display.h"
 #include "server.h"
@@ -7,17 +19,8 @@
 #include <stdlib.h>
 #include "ft_string.h"
 
-char *main_server(t_server *server)
+void	core_main_server(t_server *server)
 {
-	if ((server->size_buf = recv(server->sock, server->buffer, SIZE_BUF, 0)) == -1)
-	{
-		ft_putstr("server error : we don t found client ...\n");
-		server->running = 0;
-		return (0);
-	}
-	server->num_built_old = server->num_built;
-	server->sp_buffer = ft_strsplit_nb_word(server->buffer, ' ', &(server->size_sp));
-	server->num_built = find_builtin(server->sp_buffer[0]);
 	if (server->num_built)
 	{
 		if (server->num_built == PUT)
@@ -25,11 +28,7 @@ char *main_server(t_server *server)
 		else if (server->num_built == GET && server->size_sp == 2)
 			ft_get(server);
 		else if (server->num_built == PWD)
-		{
-			ft_putstr("\t\n-> pwd\n");
 			ft_pwd(server);
-			ft_putstr("\t\n-> end pwd\n");
-		}
 		else if (server->num_built == CD)
 			ft_cd(server);
 		else if (server->num_built == LS)
@@ -42,10 +41,21 @@ char *main_server(t_server *server)
 			send(server->sock, "500", 3, 0);
 	}
 	else
-	{
-		ft_putstr("We have wrong builtin.\n");
-		printf("--> %s|%s\n", server->buffer, server->sp_buffer[0]);
 		send(server->sock, "500", 3, 0);
+}
+
+char	*main_server(t_server *server)
+{
+	if ((server->size_buf = recv(server->sock,\
+	server->buffer, SIZE_BUF, 0)) == -1)
+	{
+		server->running = 0;
+		return (0);
 	}
+	server->num_built_old = server->num_built;
+	server->sp_buffer = ft_strsplit_nb_word(server->buffer,\
+	' ', &(server->size_sp));
+	server->num_built = find_builtin(server->sp_buffer[0]);
+	core_main_server(server);
 	return (0);
 }

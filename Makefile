@@ -47,8 +47,8 @@ COL_WHITE       = \033[1;37m
 ### SOURCES
 ###############################################
 
-SRC_M_CLIENT		= client.c main_client.c manage_put_client.c manage_get_client.c create_client.c usage_builtin.c make_client.c remaster_prompt.c
-SRC_M_SERVER		= server.c main_server.c  manage_builtin.c ft_put.c create_server.c check_good_path.c server_make.c ft_cd.c ft_mkdir.c ft_ls.c ft_pwd.c ft_quit.c ft_get.c
+SRC_M_CLIENT		= client.c main_client.c manage_put_client.c manage_get_client.c create_client.c usage_builtin.c make_client.c remaster_prompt.c my_send_and_recv.c
+SRC_M_SERVER		= server.c main_server.c  manage_builtin.c ft_put.c create_server.c server_make.c ft_cd.c ft_mkdir.c ft_ls.c ft_pwd.c ft_quit.c ft_get.c network.c
 SRC_M_UTILITIES         =
 
 

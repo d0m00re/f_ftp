@@ -93,4 +93,6 @@ char			*main_server(t_server *server);
 
 int				create_server(int port);
 
+int				send_and_return(t_server *server, char *str, int len, int ret);
+
 #endif

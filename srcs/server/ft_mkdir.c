@@ -25,6 +25,6 @@ int	ft_mkdir(t_server *server)
 		ft_strcpy(server->buffer, ERROR_MKDIR);
 	else
 		ft_strcpy(server->buffer, SUCCESS_CMD);
-	send(server->sock, server->buffer, 3, 0);	
+	send(server->sock, server->buffer, 3, 0);
 	return (0);
 }

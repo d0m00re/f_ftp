@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_ret.c                                    :+:      :+:    :+:   */
+/*   network.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/03 21:23:03 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/05 22:50:52 by alhelson         ###   ########.fr       */
+/*   Created: 2018/06/05 06:13:32 by alhelson          #+#    #+#             */
+/*   Updated: 2018/06/05 06:15:00 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_display.h"
+#include "server.h"
+#include <sys/socket.h>
 
-int	ft_putstr_ret(char const *str, int ret)
+int	send_and_return(t_server *server, char *str, int len, int ret)
 {
-	if (!str)
-		return (1);
-	ft_putstr(str);
+	send(server->sock, str, len, 0);
 	return (ret);
 }

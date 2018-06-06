@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 16:03:23 by alhelson          #+#    #+#             */
-/*   Updated: 2018/03/18 16:04:22 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/05 23:11:27 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ char		*ft_concat_with_sep(char *s1, char *s2, char *sep);
 
 char		*extract_string_diff(char *main, char *last);
 
-char		*concat_2dchar_in_buffer(char *buffer, char **tab_string, int size_tab_string, char *sep);
+char		*concat_2dchar_in_buffer(char *buffer, char **tab_string,\
+		int size_tab_string, char *sep);
 
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strchr(const char *s, int c);

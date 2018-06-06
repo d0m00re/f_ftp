@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 23:13:06 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/03 07:06:15 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/05 23:05:50 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ char			**ft_strsplit_nb_word(char const *s, char c, int *size)
 	return ((char **)str);
 }
 
-void		*ft_strsplit_free(char **sp)
+void			*ft_strsplit_free(char **sp)
 {
-	int		c;
+	int			c;
 
 	c = 0;
 	if (!sp)

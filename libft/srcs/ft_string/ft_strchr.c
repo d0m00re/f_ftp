@@ -46,14 +46,3 @@ char		*ft_strrchr(const char *s, int c)
 	}
 	return (0);
 }
-
-/*
-** int main()
-** {
-**	char *s = "coucou/var/en/coucou/john";
-**
-**	printf("--> %s\n --> %s\n --> %s\n --> %s\n",
-**  s, ft_strchr(s, '/'), ft_strrchr(s, '/'), ft_strrchr(s, '*'));
-**	return (0);	
-** }
-*/

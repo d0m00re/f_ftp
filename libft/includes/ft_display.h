@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 16:05:05 by alhelson          #+#    #+#             */
-/*   Updated: 2018/03/18 16:05:31 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/05 23:10:10 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_putstr_fd(char const *s, int fd);
 
 void	ft_putstr(char const *s);
 
-int	ft_putstr_ret(char const *s, int ret);
+int		ft_putstr_ret(char const *s, int ret);
 
 void	ft_putstr_limit(char const *s, size_t size);
 

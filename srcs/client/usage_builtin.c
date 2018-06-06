@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 06:52:17 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/03 06:52:27 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/05 04:56:35 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ void	ft_usage_builtin_store(t_client *client, int num)
 	ft_strcpy(client->buffer, "666 ");
 	if (num == PUT)
 		ft_strcat(client->buffer, USAGE_PUT);
-        else if (num == GET)
-                ft_strcat(client->buffer, USAGE_GET);
-        else if (num == PWD)
-                ft_strcat(client->buffer, USAGE_PWD);
-        else if (num == CD)
-                ft_strcat(client->buffer, USAGE_CD);
-        else if (num == MKDIR)
-                ft_strcat(client->buffer, USAGE_MKDIR);
-        else if (num == LS)
-                ft_strcat(client->buffer, USAGE_LS);
-        else
-                ft_strcat(client->buffer, USAGE_BUILTIN);
+	else if (num == GET)
+		ft_strcat(client->buffer, USAGE_GET);
+	else if (num == PWD)
+		ft_strcat(client->buffer, USAGE_PWD);
+	else if (num == CD)
+		ft_strcat(client->buffer, USAGE_CD);
+	else if (num == MKDIR)
+		ft_strcat(client->buffer, USAGE_MKDIR);
+	else if (num == LS)
+		ft_strcat(client->buffer, USAGE_LS);
+	else
+		ft_strcat(client->buffer, USAGE_BUILTIN);
 	client->size_buf = ft_strlen(client->buffer);
 }

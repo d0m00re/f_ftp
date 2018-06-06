@@ -27,10 +27,11 @@ int			ft_ls(t_server *server)
 	char	*buffer;
 
 	len = 0;
+	ft_putstr("\tSERVER : LS BEGIN\n");
 	if (!(buffer = get_rep_string(".", &len)))
 	{
 		ft_putstr("* bad ls\n");
-		ft_strcpy(server->buffer, "510");
+		ft_strcpy(server->buffer, "500");
 		server->size_buf = 3;
 	}
 	else
@@ -42,5 +43,6 @@ int			ft_ls(t_server *server)
 		free(buffer);
 	}
 	send(server->sock, server->buffer, server->size_buf, 0);
+	ft_putstr("\nSERVER : LS END\n");
 	return (0);
 }

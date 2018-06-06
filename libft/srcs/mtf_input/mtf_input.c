@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:03:31 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/01 02:03:49 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/05 22:45:29 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,3 @@ char		*main_input(void)
 	}
 	return (line);
 }
-
-/*
-int main()
-{
-	char *str;
-
-	str = main_input();
-	printf("---> %s|%zu\n", str,  ft_strlen(str));
-	return 1;
-}	
-*/
