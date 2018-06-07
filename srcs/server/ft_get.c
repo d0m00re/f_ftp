@@ -21,7 +21,7 @@
 
 #include <sys/socket.h>
 
-/*
+
 static int		check_futur_path(t_server *s)
 {
 	char		*path_to_test;
@@ -45,14 +45,14 @@ static int		check_futur_path(t_server *s)
 	free(path);
 	return (valid_path);
 }
-*/
+
 static int		send_and_return_server(t_server *server,\
 			char *str, int size, int ret)
 {
 	send(server->sock, str, size, 0);
 	return (ret);
 }
-/*
+
 static int		good_param(t_server *server)
 {
 	if (server->size_sp < 2)
@@ -63,7 +63,7 @@ static int		good_param(t_server *server)
 		return (send_and_return_server(server, "523", 3, 3));
 	return (0);
 }
-*/
+
 typedef struct s_get_server
 {
 	int fd;
@@ -87,16 +87,12 @@ t_get_server			*init_get_server(t_server *server)
 {
 	t_get_server	*gs;
 
-	ft_putstr("Begin init get server ....\n");
 	if (!(gs = malloc(sizeof(t_get_server))))
 		return (0);
 	if (!(gs->cmd = ft_strdup("get")))
 		return (0);
 	if (!(gs->name_file = ft_strdup(server->sp_buffer[1])))
 		return (0);
-	if (!(gs->header = malloc(sizeof(char))))
-	printf("---> %s|%s\n", server->sp_buffer[0], server->sp_buffer[1]);
-	concat_2dchar_in_buffer(gs->header, server->sp_buffer, 2, " ");
 	gs->len_cmd = ft_strlen(gs->cmd);
 	gs->len_name = ft_strlen(gs->name_file);
         if (!(gs->header = malloc(sizeof(char) * (gs->len_cmd + gs->len_name + 3))))
@@ -107,8 +103,15 @@ t_get_server			*init_get_server(t_server *server)
 	gs->sp_size = 0;
 	gs->real_size = 0;
 	gs->fd = 0;
-	ft_putstr("OOOOOOOO\n");
 	return (gs);
+}
+
+void			destroy_get_server(t_get_server *s)
+{
+	free(s->cmd);
+	free(s->name_file);
+	free(s->header);
+	free(s);
 }
 
 int				ft_get(t_server *server)
@@ -117,15 +120,12 @@ int				ft_get(t_server *server)
 	t_get_server *s;
 
 	printf("Begining ....\n");
-//	if (good_param(server))
-//		return (3);
+	if (good_param(server))
+		return (3);
 	s = init_get_server(server);
 	printf("NAME FILE : %s\n", s->name_file);
 	if ((s->fd = open(s->name_file, O_RDONLY)) == -1)
-	{
-		ft_putstr("FUCK OFFFFFFFFFFFFFFFFFF - file not found\n");
 		return (send_and_return_server(server, "524", 3, 3));
-	}
 	ft_strcpy(server->buffer, "201 ");
 	while ((s->len = read(s->fd, &(server->buffer[4]), SIZE_BUF - 4)) > 0)
 	{
@@ -135,5 +135,6 @@ int				ft_get(t_server *server)
 	}
 	ft_putstr("FUCK OF\n");
 	send(server->sock, "200", 3, 0);
+	destroy_get_server(s);
 	return (ret_and_close(s->fd, 3));
 }

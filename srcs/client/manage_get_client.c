@@ -63,7 +63,6 @@ t_get_client *init_get_client(t_client *client)
 	gc->len_cmd = ft_strlen(gc->cmd);
 	gc->len_name = ft_strlen(gc->name_file);
 	gc->len_header = gc->len_cmd + gc->len_name + 2;
-	ft_putstr("coucou\n");
 	if (!(gc->header = malloc(sizeof(char) * (gc->len_header + 1))))
 		return (0);
 	printf("buffer : %s | %s\n", gc->name_file, gc->cmd);
@@ -101,7 +100,6 @@ int manage_get_client(t_client *client)
 	client->size_buf = 666;
 	while (client->size_buf != 3) // fin == 3
 	{
-		printf("Turn .... : %d\n", client->size_buf);
 		get_send_recv(client, cg);
 		ft_write_file(cg->name_file, &(client->buffer[4]), client->size_buf - 4, cg->actual_turn);
 		cg->actual_turn += 1;

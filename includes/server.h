@@ -72,6 +72,7 @@ typedef struct	s_server
 }				t_server;
 
 t_server		*server_make(char *server_name);
+void			server_make2(t_server *server, char *server_name);
 
 /*
 ** PATH MANAGE

@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc -g -fsanitize=address -Wall -Werror -Wextra
+CC = gcc #-g -fsanitize=address -Wall -Werror -Wextra
 INC=includes
 INC_LIB=libft/includes
 

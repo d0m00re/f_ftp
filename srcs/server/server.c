@@ -83,21 +83,22 @@ int						main(int ac, char **av)
 		return (0);
 	while (server->running)
 	{
+		printf("--> %d\n", server->running);
 		if ((server->sock = accept(sock,\
 		(struct sockaddr*)&csin, &cslen)) == -1)
 			return (1);
-		if ((pid = fork()) == -1)
-		{
-			close(server->sock);
-			continue;
-		}
-		else if (pid == 0)
-		{
+//		if ((pid = fork()) == -1)
+//		{
+//			close(server->sock);
+//			continue;
+//		}
+//		else if (pid == 0)
+//		{
 			core_server(server);
-			ft_putstr("Bug on server ...\n");
-		}
-		else if (pid > 0)
-			close(server->sock);
+//			ft_putstr("Bug on server ...\n");
+//		}
+//		else if (pid > 0)
+//			close(server->sock);
 	}
 	close(sock);
 }
