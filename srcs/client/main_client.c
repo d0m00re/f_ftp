@@ -34,10 +34,7 @@ int			find_builtin(char *str)
 	else if (!ft_strcmp(str, "get"))
 		return (GET);
 	else if (!(ft_strcmp(str, "put")))
-	{
-		ft_putstr("put.\n");
 		return (PUT);
-	}
 	else if (!ft_strcmp(str, "pwd"))
 		return (PWD);
 	else if (!ft_strcmp(str, "quit"))

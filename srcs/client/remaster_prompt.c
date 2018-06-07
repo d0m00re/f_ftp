@@ -41,7 +41,10 @@ int				remaster_prompt(char *str, int size)
 	else if (str[0] == '5')
 		message_5xx(str);
 	else if (str[0] == '2')
-		ft_putstr_green(&(str[4]));
+	{
+		if (str[3])
+			ft_putstr_green(&(str[4]));
+	}
 	else
 		ft_putstr_red(&(str[4]));
 	ft_putstr("\n\n");

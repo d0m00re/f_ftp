@@ -48,6 +48,7 @@ int				manage_put_client(t_client *client)
 	concat_2dchar_in_buffer(client->buffer, client->sp_buffer, 2, " ");
 	while ((len = read(fd, &(client->buffer[lenh]), SIZE_BUF - lenh)) > 0)
 	{
+		ft_putstr("send data ....\n");
 		if ((send(client->sock, client->buffer, len + lenh, 0)) == -1)
 			return (ft_putstr_ret("put : error send data\n", 1));
 		if ((ret = recv(client->sock, client->buffer, SIZE_BUF, 0)) == -1)

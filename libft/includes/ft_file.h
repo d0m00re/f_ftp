@@ -36,6 +36,7 @@ char	*ft_read_file(char *path);
 
 int		ft_file_write_begin(char *path, char *data, size_t size);
 int		ft_file_write_end(char *path, char *data, size_t size);
+int		ft_write_file(char *path, char *data, size_t size, int nb);
 
 /*
 ** REPERTORIES MANAGE

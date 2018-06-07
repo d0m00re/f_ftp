@@ -55,3 +55,18 @@ int		ft_file_write_end(char *path, char *data, size_t size)
 	close(fd);
 	return (fd);
 }
+
+/*
+** 0 : ecrire en debut en ecransanr
+** > 0 : ecrirw a la fin
+*/
+int	ft_write_file(char *path, char *data, size_t size, int nb)
+{
+	int ret;
+
+	if (nb == 0)
+		ret = ft_file_write_begin(path, data, size);
+	else
+		ret = ft_file_write_end(path, data, size);
+	return (ret);
+}

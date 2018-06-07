@@ -21,7 +21,6 @@
 
 #include <sys/socket.h>
 
-/*
 static int		check_futur_path(t_server *s)
 {
 	char		*path_to_test;
@@ -45,14 +44,14 @@ static int		check_futur_path(t_server *s)
 	free(path);
 	return (valid_path);
 }
-*/
+
 static int		send_and_return_server(t_server *server,\
 			char *str, int size, int ret)
 {
 	send(server->sock, str, size, 0);
 	return (ret);
 }
-/*
+
 static int		good_param(t_server *server)
 {
 	if (server->size_sp < 2)
@@ -63,77 +62,35 @@ static int		good_param(t_server *server)
 		return (send_and_return_server(server, "523", 3, 3));
 	return (0);
 }
-*/
-typedef struct s_get_server
-{
-	int fd;
-	char *cmd;
-	char *name_file;
-	char *header;
-
-	int len_cmd;
-	int len_name;
-	int len_header;
-
-	char **sp_buffer;
-	int sp_size;
-
-	int len;
-
-	int real_size;
-} t_get_server;
-
-t_get_server			*init_get_server(t_server *server)
-{
-	t_get_server	*gs;
-
-	ft_putstr("Begin init get server ....\n");
-	if (!(gs = malloc(sizeof(t_get_server))))
-		return (0);
-	if (!(gs->cmd = ft_strdup("get")))
-		return (0);
-	if (!(gs->name_file = ft_strdup(server->sp_buffer[1])))
-		return (0);
-	if (!(gs->header = malloc(sizeof(char))))
-	printf("---> %s|%s\n", server->sp_buffer[0], server->sp_buffer[1]);
-	concat_2dchar_in_buffer(gs->header, server->sp_buffer, 2, " ");
-	gs->len_cmd = ft_strlen(gs->cmd);
-	gs->len_name = ft_strlen(gs->name_file);
-        if (!(gs->header = malloc(sizeof(char) * (gs->len_cmd + gs->len_name + 3))))
-		return (0);
-        concat_2dchar_in_buffer(gs->header, server->sp_buffer, 2, " ");
-	gs->len_header = ft_strlen(gs->header);
-	gs->sp_buffer = 0;
-	gs->sp_size = 0;
-	gs->real_size = 0;
-	gs->fd = 0;
-	ft_putstr("OOOOOOOO\n");
-	return (gs);
-}
 
 int				ft_get(t_server *server)
 {
-//	size_t		len;
-	t_get_server *s;
+	int			ret;
+	int			fd;
+	size_t		len;
 
-	printf("Begining ....\n");
-//	if (good_param(server))
-//		return (3);
-	s = init_get_server(server);
-	printf("NAME FILE : %s\n", s->name_file);
-	if ((s->fd = open(s->name_file, O_RDONLY)) == -1)
+	if (good_param(server))
+		return (3);
+	server->len_header = ft_strlen(server->sp_buffer[0]) +\
+	ft_strlen(server->sp_buffer[1]) + 2;
+	concat_2dchar_in_buffer(server->buffer, server->sp_buffer, 2, " ");
+	if ((fd = open(server->sp_buffer[1], O_RDONLY)) == -1)
 	{
-		ft_putstr("FUCK OFFFFFFFFFFFFFFFFFF - file not found\n");
+		ft_putstr("FUCK OGFFFFFFFFFFFFFFFFFf - file not found\n");
 		return (send_and_return_server(server, "524", 3, 3));
 	}
-	ft_strcpy(server->buffer, "201 ");
-	while ((s->len = read(s->fd, &(server->buffer[4]), SIZE_BUF - 4)) > 0)
+	while ((len = read(fd, &(server->buffer[server->len_header]),\
+	SIZE_BUF - server->len_header)) > 0)
 	{
-		printf("OK-TURN : %d\n", s->len + 4);
-		send(server->sock, server->buffer, s->len + 4, 0);
-		recv(server->sock, server->buffer, SIZE_BUF, 0);		
+		printf("Turn .... : %lu\n", len + server->len_header);
+		if ((send(server->sock, server->buffer,\
+		len + server->len_header, 0)) == -1)
+			return (1);
+		ret = recv(server->sock, server->buffer, SIZE_BUF, 0);
+		concat_2dchar_in_buffer(server->buffer, server->sp_buffer, 2, " ");
+		printf("Turnos ...\n");
 	}
-	ft_putstr("FUCK OF\n");
-	send(server->sock, "200", 3, 0);
-	return (ret_and_close(s->fd, 3));
+	ft_strcpy(server->buffer, "200");
+	send(server->sock, server->buffer, 3, 0);
+	return (ret_and_close(fd, 3));
 }

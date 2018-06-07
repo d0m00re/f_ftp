@@ -27,6 +27,7 @@
 #include "server.h"
 #include "ft_string.h"
 #include "ft_display.h"
+#include "ft_file.h"
 
 static int				usage(char *str)
 {
@@ -40,8 +41,13 @@ static void				core_server(t_server *server)
 {
 	while (server->running)
 	{
-		ft_bzero(server->buffer, 1024);
-		main_server(server);
+		if ((is_rep(server->actual) && is_rep(server->full)) == 0)
+			server->running = 0;
+		else
+		{
+			ft_bzero(server->buffer, 1024);
+			main_server(server);
+		}
 	}
 	close(server->sock);
 }
@@ -86,7 +92,10 @@ int						main(int ac, char **av)
 			continue;
 		}
 		else if (pid == 0)
+		{
 			core_server(server);
+			ft_putstr("Bug on server ...\n");
+		}
 		else if (pid > 0)
 			close(server->sock);
 	}

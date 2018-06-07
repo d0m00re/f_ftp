@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 23:19:22 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/06 04:05:45 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/07 04:26:57 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,106 +20,93 @@
 #include "setting.h"
 #include "ft_display.h"
 #include "server.h"
-#include <string.h>
-#include "client.h"
 
 static char	*extract_last_signif(char *s)
 {
 	char	*str;
 
 	if (!(str = ft_strrchr(s, '/')))
-		return (s);
+		return (ft_strdup(s));
 	str++;
 	if (!(str))
 		return (0);
-	return (str);
+	return (ft_strdup(str));
 }
 
-int			initalize_get_client(t_client *client,\
-char **last_sign, char **old_string, int *c)
+typedef	struct s_get_client
 {
-	int		len_header;
+	char *cmd;
+	char *name_file;
+	char *header;
 
-	if (client->size_sp < 2)
-		return (update_client_and_ret(client, "856 : invalid nb argument", 0));
-	if (!(*last_sign = extract_last_signif(client->sp_buffer[1])))
-		*last_sign = ft_strdup(client->sp_buffer[1]);
-	printf("------> %s\n", *last_sign);
-	*c = 0;
-	len_header = ft_strlen(client->sp_buffer[0]) +\
-	ft_strlen(client->sp_buffer[1]) + 2;
-	concat_2dchar_in_buffer(client->buffer, client->sp_buffer, 2, " ");
-	*old_string = ft_strdup(client->buffer);
-	send(client->sock, client->buffer, 1024, 0);
-	client->size_buf = recv(client->sock, client->buffer, 1024, 0);
-	if (client->size_buf == 3 && ft_strcmp(client->buffer, "714") == 0)
+	int len_cmd;
+	int len_name;
+	int len_header;
+
+	char **sp_buffer;
+	int sp_size;
+
+	int real_size; // size of data
+	int actual_turn;
+} t_get_client;
+
+t_get_client *init_get_client(t_client *client)
+{
+	t_get_client *gc;
+
+	if (!(gc = malloc(sizeof(t_get_client))))
 		return (0);
-	ft_file_write_begin(*last_sign, &(client->buffer[(size_t)len_header]),\
-	(size_t)client->size_buf - len_header);
-	send(client->sock, *old_string, ft_strlen(*old_string), 0);
-	return (len_header);
+	if (!(gc->cmd = ft_strdup("get")))
+		return (0);
+	if (!(gc->name_file = extract_last_signif(client->sp_buffer[1])))
+		return (0);
+	gc->len_cmd = ft_strlen(gc->cmd);
+	gc->len_name = ft_strlen(gc->name_file);
+	gc->len_header = gc->len_cmd + gc->len_name + 2;
+	ft_putstr("coucou\n");
+	if (!(gc->header = malloc(sizeof(char) * (gc->len_header + 1))))
+		return (0);
+	printf("buffer : %s | %s\n", gc->name_file, gc->cmd);
+	concat_2dchar_in_buffer(gc->header, client->sp_buffer, 2, " ");
+	gc->actual_turn = 0;
+	printf("cmd --> %s\n", gc->cmd);
+	printf("name_file --> %s\n", gc->name_file);
+	printf("header --> %s\n", gc->header);
+	return (gc);
 }
 
-int			core_manage_get_client(t_client *client,\
-int len_header, char *old_string, char *last_sign)
+void	destroy_get_client(t_get_client *gc)
 {
-	if ((client->size_buf = recv(client->sock,\
-	client->buffer, SIZE_BUF, 0)) > 3)
-	{
-		printf("SIZE BUF : %d\n", client->size_buf);
-		client->sp_buffer = 0; //ft_strsplit_free(client->sp_buffer);
-		client->sp_buffer = ft_strsplit_nb_word(client->buffer,\
-		' ', &(client->size_sp));
-		if (find_builtin(client->sp_buffer[0]) == GET && client->size_sp >= 2)
-		{
-			printf("FUCK OF OF COPY ... : %d|%s\n", client->size_buf - len_header, last_sign);
-			int t = ft_file_write_end(last_sign, &(client->buffer[(size_t)len_header]),\
-			((size_t)client->size_buf - len_header));
-			printf("---> %d\n", t);
-		}
-		else
-		{
-			free(old_string);
-			return (ft_putstr_ret("Error get client.\n", 0));
-		}
-		send(client->sock, old_string, ft_strlen(old_string), 0);
-	}
-	else
-		return (-1);
+	free(gc->cmd);
+	free(gc->name_file);
+	free(gc->header);
+	free(gc);
+}
+
+int	get_send_recv(t_client *client, t_get_client *cg)
+{
+	send(client->sock, cg->header, cg->len_header, 0);
+	client->size_buf = recv(client->sock, client->buffer, SIZE_BUF, 0);
 	return (1);
 }
 
 /*
-** dans le cas ou on a un taille de 3 c est ok
-** c -= 1 nous permet das le cas ou on renvoi -1 de
-** finir la boucle car == -2 in this is other case
+** restriction repertoire courant
 */
-
-int			manage_get_client(t_client *client)
+int manage_get_client(t_client *client)
 {
-	char	*old_string;
-	int		c;
-	size_t	len_header;
-	char	*last_sign;
+	t_get_client *cg;
 
-	len_header = 0;
-	old_string = 0;
-	last_sign = 0;
-	if ((len_header = initalize_get_client(client,\
-	&last_sign, &old_string, &c)) == 0)
-		return (0);
-	while (!c)
+	cg = init_get_client(client);
+	client->size_buf = 666;
+	while (client->size_buf != 3) // fin == 3
 	{
-		printf("Turn bitch ....\n");
-		if ((c = core_manage_get_client(client, len_header,\
-		old_string, last_sign)) == 0)
-			return (0);
-		client->sp_buffer = 0;//ft_strsplit_free(client->sp_buffer);
-		c -= 1;
-		printf("--> %d\n", c);
+		printf("Turn .... : %d\n", client->size_buf);
+		get_send_recv(client, cg);
+		ft_write_file(cg->name_file, &(client->buffer[4]), client->size_buf - 4, cg->actual_turn);
+		cg->actual_turn += 1;
 	}
-	free(old_string);
-	free(last_sign);
-	//client->sp_buffer = ft_strsplit_free(client->sp_buffer);
-	return (client->size_buf);
+	printf("nb turn : %d\n", cg->actual_turn);
+	destroy_get_client(cg);
+	return (1);
 }

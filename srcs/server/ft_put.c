@@ -73,6 +73,7 @@ int			ft_put(t_server *server)
 		last_sign = server->sp_buffer[1];
 	if (is_not_file_but_other(server->sp_buffer[1]))
 		return (send_and_return(server, "532", 3, 1));
+	last_sign = ft_strdup(last_sign);
 	server->len_header = ft_strlen(server->sp_buffer[0]) +\
 	ft_strlen(server->sp_buffer[1]) + 2;
 	ft_file_write_begin(last_sign,\
@@ -87,5 +88,7 @@ int			ft_put(t_server *server)
 		core_ft_put(server, last_sign, &c);
 		server->sp_buffer = ft_strsplit_free(server->sp_buffer);
 	}
+	free(last_sign);
+	ft_putstr("And valid ....\n");
 	return (0);
 }
