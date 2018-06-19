@@ -15,13 +15,10 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
-
 #include "mtf_input.h"
 #include "ft_string.h"
-
 #include "server.h"
 #include "client.h"
-
 #include "ft_display.h"
 
 int						create_client(char *addr, int port)

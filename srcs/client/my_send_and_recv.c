@@ -15,7 +15,6 @@
 #include "setting.h"
 #include <sys/socket.h>
 #include "ft_display.h"
-#include <stdio.h>
 
 int		my_send_and_recv(t_client *client)
 {

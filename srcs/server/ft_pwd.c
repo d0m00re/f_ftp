@@ -14,7 +14,6 @@
 #include "ft_file.h"
 #include "server.h"
 #include "ft_string.h"
-#include <stdio.h>
 #include <sys/socket.h>
 #include <stdlib.h>
 

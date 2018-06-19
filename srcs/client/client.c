@@ -15,26 +15,22 @@
 ** 12.33.56.7 : 80
 */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
-
 #include "mtf_input.h"
 #include "ft_string.h"
 #include "ft_stdlib.h"
-
 #include "server.h"
 #include "client.h"
-
 #include "ft_display.h"
 
 int					usage(char *str)
 {
-	ft_putstr("Usage: ");
+	ft_putstr(" Usage: ");
 	ft_putstr(str);
 	ft_putstr(" <addr> <port>\n");
 	return (-1);

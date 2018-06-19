@@ -15,7 +15,6 @@
 ** 12.33.56.7 : 80
 */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/socket.h>
@@ -28,6 +27,7 @@
 #include "ft_string.h"
 #include "ft_display.h"
 #include "ft_file.h"
+#include "ft_stdlib.h"
 
 static int				usage(char *str)
 {
@@ -61,7 +61,7 @@ static t_server			*initialize_server(int ac, char **av, int *sock)
 		usage(av[0]);
 		return (0);
 	}
-	*sock = atoi(av[1]);
+	*sock = ft_atoi(av[1]);
 	*sock = create_server(*sock);
 	if (!(server = server_make("beatiful_server")))
 	{
@@ -83,22 +83,18 @@ int						main(int ac, char **av)
 		return (0);
 	while (server->running)
 	{
-		printf("--> %d\n", server->running);
 		if ((server->sock = accept(sock,\
 		(struct sockaddr*)&csin, &cslen)) == -1)
 			return (1);
-//		if ((pid = fork()) == -1)
-//		{
-//			close(server->sock);
-//			continue;
-//		}
-//		else if (pid == 0)
-//		{
+		if ((pid = fork()) == -1)
+		{
+			close(server->sock);
+			continue;
+		}
+		else if (pid == 0)
 			core_server(server);
-//			ft_putstr("Bug on server ...\n");
-//		}
-//		else if (pid > 0)
-//			close(server->sock);
+		else if (pid > 0)
+			close(server->sock);
 	}
 	close(sock);
 }

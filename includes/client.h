@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 06:46:46 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/05 23:15:50 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/07 06:53:36 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ typedef struct	s_client
 	int			running;
 	int			sock;
 }				t_client;
+
+typedef struct	s_get_client
+{
+	char		*cmd;
+	char		*name_file;
+	char		*header;
+	int			len_cmd;
+	int			len_name;
+	int			len_header;
+	char		**sp_buffer;
+	int			sp_size;
+	int			real_size;
+	int			actual_turn;
+}				t_get_client;
 
 t_client		*make_client(void);
 

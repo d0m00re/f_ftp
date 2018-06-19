@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 21:10:16 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/03 06:45:11 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/07 22:35:02 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,26 @@ typedef struct	s_server
 	int			running;
 }				t_server;
 
+typedef struct	s_get_server
+{
+	int			fd;
+	char		*cmd;
+	char		*name_file;
+	char		*header;
+	int			len_cmd;
+	int			len_name;
+	int			len_header;
+	char		**sp_buffer;
+	int			sp_size;
+	int			len;
+	int			real_size;
+}				t_get_server;
+
 t_server		*server_make(char *server_name);
 void			server_make2(t_server *server, char *server_name);
+
+t_get_server	*init_get_server(t_server *server);
+void			destroy_get_server(t_get_server *s);
 
 /*
 ** PATH MANAGE
@@ -95,5 +113,8 @@ char			*main_server(t_server *server);
 int				create_server(int port);
 
 int				send_and_return(t_server *server, char *str, int len, int ret);
+
+int				check_futur_path(t_server *s);
+int				check_futur_path2(t_server *s);
 
 #endif

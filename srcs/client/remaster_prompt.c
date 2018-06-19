@@ -12,7 +12,6 @@
 
 #include "ft_display.h"
 #include "ft_string.h"
-#include <stdio.h>
 
 static void		message_5xx(char *str)
 {
@@ -26,13 +25,15 @@ static void		message_5xx(char *str)
 	else if (!ft_strncmp(str, "524", 3) ||\
 		!ft_strncmp(str, "533", 3))
 		ft_putstr_red(" this is not a file");
+	else if (!ft_strncmp(str, "544", 3))
+		ft_putstr_red(" client have a rep of this name");
 	else
 		ft_putstr_red(" unknown error");
 }
 
 int				remaster_prompt(char *str, int size)
 {
-	if (strncmp(str, "20", 2) == 0)
+	if (ft_strncmp(str, "20", 2) == 0)
 		ft_putstr_green("SUCCESS : ");
 	else
 		ft_putstr_red("ERROR : ");
@@ -42,7 +43,7 @@ int				remaster_prompt(char *str, int size)
 		message_5xx(str);
 	else if (str[0] == '2')
 	{
-		if (str[3])
+		if (str[3] && size > 3)
 			ft_putstr_green(&(str[4]));
 	}
 	else

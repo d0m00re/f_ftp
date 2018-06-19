@@ -13,7 +13,6 @@
 #include "ft_string.h"
 #include "ft_display.h"
 #include "server.h"
-#include <stdio.h>
 #include <sys/socket.h>
 #include "setting.h"
 #include <stdlib.h>
@@ -23,7 +22,6 @@ void	core_main_server(t_server *server)
 {
 	if (server->num_built)
 	{
-		ft_putstr("begin\n");
 		if (server->num_built == PUT)
 			ft_put(server);
 		else if (server->num_built == GET && server->size_sp == 2)
@@ -36,7 +34,6 @@ void	core_main_server(t_server *server)
 			ft_ls(server);
 		else if (server->num_built == QUIT)
 		{
-			ft_putstr("FUCK\n");
 			ft_quit(server);
 			close(server->sock);
 		}
@@ -46,10 +43,7 @@ void	core_main_server(t_server *server)
 			send(server->sock, "500", 3, 0);
 	}
 	else
-	{
-		ft_putstr("WTF?????\n");
 		send(server->sock, "500", 3, 0);
-	}
 }
 
 char	*main_server(t_server *server)
@@ -65,7 +59,6 @@ char	*main_server(t_server *server)
 	server->sp_buffer = ft_strsplit_nb_word(server->buffer,\
 	' ', &(server->size_sp));
 	server->num_built = find_builtin(server->sp_buffer[0]);
-	printf("Find builtin : %d|%s\n", server->num_built, server->sp_buffer[0]);
 	core_main_server(server);
 	server->sp_buffer = ft_strsplit_free(server->sp_buffer);
 	return (0);

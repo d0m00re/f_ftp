@@ -14,7 +14,6 @@
 #include "ft_string.h"
 #include "ft_display.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 int	find_builtin(char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: alhelson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 04:27:40 by alhelson          #+#    #+#             */
-/*   Updated: 2018/06/06 04:28:01 by alhelson         ###   ########.fr       */
+/*   Updated: 2018/06/07 18:51:08 by alhelson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_file.h"
 #include "server.h"
 #include "ft_string.h"
-#include <stdio.h>
 #include <sys/socket.h>
 #include "setting.h"
 #include <unistd.h>
@@ -54,11 +53,14 @@ static void	core_ft_put(t_server *server, char *last_sign, int *c)
 			*c = 1;
 	}
 	else
-	{
-		ft_putstr("Other affectation ....\n");
 		*c = 1;
-	}
 	send(server->sock, "200 ", 4, 0);
+}
+
+static int	free_and_ret(char *str, int ret)
+{
+	free(str);
+	return (ret);
 }
 
 int			ft_put(t_server *server)
@@ -81,14 +83,11 @@ int			ft_put(t_server *server)
 	(size_t)server->size_buf - server->len_header);
 	if ((send(server->sock, "200 ", 4, 0)) == -1)
 		return (ft_putstr_ret("ft_put : error send data to the client\n", 1));
-	printf("c : %d\n", c);
 	while (!c)
 	{
 		server->sp_buffer = ft_strsplit_free(server->sp_buffer);
 		core_ft_put(server, last_sign, &c);
 		server->sp_buffer = ft_strsplit_free(server->sp_buffer);
 	}
-	free(last_sign);
-	ft_putstr("And valid ....\n");
-	return (0);
+	return (free_and_ret(last_sign, 0));
 }

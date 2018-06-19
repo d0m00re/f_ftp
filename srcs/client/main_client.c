@@ -10,14 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
-
 #include "mtf_input.h"
 #include "ft_string.h"
 #include "server.h"
@@ -63,6 +61,7 @@ void		init_main_client(t_client *client, int *num_builtin, int *ret)
 
 int			end_main_client(t_client *client, int num_builtin)
 {
+	client->sp_buffer = ft_strsplit_free(client->sp_buffer);
 	remaster_prompt(client->buffer, client->size_buf);
 	return (num_builtin);
 }
@@ -93,6 +92,5 @@ int			main_client(t_client *client)
 		return (700);
 	else
 		ft_usage_builtin_store(client, num_builtin);
-	client->sp_buffer = ft_strsplit_free(client->sp_buffer);
 	return (end_main_client(client, num_builtin));
 }

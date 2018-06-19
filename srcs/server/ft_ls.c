@@ -19,7 +19,6 @@
 #include <sys/socket.h>
 #include "ft_file.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 int			ft_ls(t_server *server)
 {

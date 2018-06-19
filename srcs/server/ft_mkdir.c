@@ -14,13 +14,14 @@
 #include "server.h"
 #include <unistd.h>
 #include <sys/stat.h>
-#include <stdio.h>
 #include "setting.h"
 #include <sys/socket.h>
 #include "ft_string.h"
 
 int	ft_mkdir(t_server *server)
 {
+	if (check_futur_path(server) == 0)
+		return (send_and_return(server, "522", 3, 0));
 	if ((mkdir(server->sp_buffer[1], 0777)) == -1)
 		ft_strcpy(server->buffer, ERROR_MKDIR);
 	else
